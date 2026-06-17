@@ -1832,6 +1832,7 @@ struct SessionWindowSnapshot: Codable, Sendable {
     /// Per-display-configuration remembered frames (LRU ring). Optional and
     /// additive so older persisted snapshots decode unchanged.
     var configFrames: [SessionConfigFrameEntry]? = nil
+    var isQuickTerminal: Bool? = nil
 }
 
 struct AppSessionSnapshot: Codable, Sendable {

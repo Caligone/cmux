@@ -61,17 +61,21 @@ extension AppDelegate {
         windowId: UUID = UUID(),
         tabManager: TabManager,
         cmuxConfigStore: CmuxConfigStore? = nil,
-        fileExplorerState: FileExplorerState? = nil
+        fileExplorerState: FileExplorerState? = nil,
+        isQuickTerminal: Bool = false,
+        window: NSWindow? = nil
     ) -> UUID {
         tabManager.windowId = windowId
-        mainWindowContexts[ObjectIdentifier(tabManager)] = MainWindowContext(
+        let contextKey = window.map { ObjectIdentifier($0) } ?? ObjectIdentifier(tabManager)
+        mainWindowContexts[contextKey] = MainWindowContext(
             windowId: windowId,
             tabManager: tabManager,
             sidebarState: SidebarState(),
             sidebarSelectionState: SidebarSelectionState(),
             fileExplorerState: fileExplorerState,
             cmuxConfigStore: cmuxConfigStore,
-            window: nil
+            isQuickTerminal: isQuickTerminal,
+            window: window
         )
         // Context-based tests exercise observer pipelines without a live phone
         // subscriber; force presence on so the graph attaches (pre-gate

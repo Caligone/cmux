@@ -148,6 +148,13 @@ struct SettingsSearchIndexTests {
         #expect(try #require(index.match("copy on select").first).id == "setting:terminal:copy-on-select")
     }
 
+    @Test func quickTerminalQueryFindsGlobalHotkeySettings() {
+        let index = SettingsSearchIndex(catalog: SettingCatalog())
+        let ids = Set(index.match("quick terminal").map(\.id))
+        #expect(ids.contains("setting:globalHotkey:enable-hotkey"))
+        #expect(ids.contains("setting:globalHotkey:shortcut"))
+    }
+
     @Test func diacriticInsensitiveMatch() {
         let index = SettingsSearchIndex(catalog: SettingCatalog())
         let plain = index.match("automation")

@@ -1258,6 +1258,10 @@ C0DE71B10000000000000001 /* AppDelegate+AgentChatNotifications.swift in Sources 
 		A5C0DE0000000000000000B8 /* ProjectTargetsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C0DE0000000000000000B7 /* ProjectTargetsTabView.swift */; };
 		0A110711000000000000001A /* PromptTurnNotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A110711000000000000001B /* PromptTurnNotificationHandler.swift */; };
 		C0DEA771000000000000000F /* ProWelcomeChecklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DEA7710000000000000010 /* ProWelcomeChecklist.swift */; };
+		2F0C09000000000000000002 /* QuickTerminalConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0C09000000000000000001 /* QuickTerminalConfiguration.swift */; };
+		2F0C0B000000000000000002 /* QuickTerminalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0C0B000000000000000001 /* QuickTerminalController.swift */; };
+		2F0C0A000000000000000002 /* QuickTerminalPlacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0C0A000000000000000001 /* QuickTerminalPlacement.swift */; };
+		2F0C08000000000000000002 /* QuickTerminalPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0C08000000000000000001 /* QuickTerminalPosition.swift */; };
 		A64610010000000000000001 /* QuitConfirmationAlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64610010000000000000002 /* QuitConfirmationAlertPresenter.swift */; };
 		A64610020000000000000001 /* QuitConfirmationAlertPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64610020000000000000002 /* QuitConfirmationAlertPresenterTests.swift */; };
 		A500RG01 /* ReactGrab.swift in Sources */ = {isa = PBXBuildFile; fileRef = A500RG00 /* ReactGrab.swift */; };
@@ -3424,6 +3428,10 @@ C0DE71B10000000000000002 /* AppDelegate+AgentChatNotifications.swift */ = {isa =
 		A5C0DE0000000000000000B7 /* ProjectTargetsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panels/ProjectTargetsTabView.swift; sourceTree = "<group>"; };
 		0A110711000000000000001B /* PromptTurnNotificationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptTurnNotificationHandler.swift; sourceTree = "<group>"; };
 		C0DEA7710000000000000010 /* ProWelcomeChecklist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProWelcomeChecklist.swift; sourceTree = "<group>"; };
+		2F0C09000000000000000001 /* QuickTerminalConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App/QuickTerminalConfiguration.swift; sourceTree = "<group>"; };
+		2F0C0B000000000000000001 /* QuickTerminalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App/QuickTerminalController.swift; sourceTree = "<group>"; };
+		2F0C0A000000000000000001 /* QuickTerminalPlacement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App/QuickTerminalPlacement.swift; sourceTree = "<group>"; };
+		2F0C08000000000000000001 /* QuickTerminalPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App/QuickTerminalPosition.swift; sourceTree = "<group>"; };
 		A64610010000000000000002 /* QuitConfirmationAlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuitConfirmationAlertPresenter.swift; sourceTree = "<group>"; };
 		A64610020000000000000002 /* QuitConfirmationAlertPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuitConfirmationAlertPresenterTests.swift; sourceTree = "<group>"; };
 		A500RG00 /* ReactGrab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panels/ReactGrab.swift; sourceTree = "<group>"; };
@@ -4948,6 +4956,10 @@ C0DE71B10000000000000002 /* AppDelegate+AgentChatNotifications.swift */ = {isa =
 				2F0C06000000000000000001 /* MainWindowVisibilityController.swift */,
 				730600020000000000000001 /* MainWindowVisibleFrameFitRescue.swift */,
 				A6D1F0000000000000000001 /* ReleasingWindowController.swift */,
+				2F0C08000000000000000001 /* QuickTerminalPosition.swift */,
+				2F0C09000000000000000001 /* QuickTerminalConfiguration.swift */,
+				2F0C0A000000000000000001 /* QuickTerminalPlacement.swift */,
+				2F0C0B000000000000000001 /* QuickTerminalController.swift */,
 				A500D011A1B2C3D4E5F60718 /* DebugLogging.swift */,
 				D35B71010000000000000002 /* StartupBreadcrumbLog.swift */,
 				A50016B0A1B2C3D4E5F60718 /* SessionSnapshotDebugBenchmark.swift */,
@@ -7812,6 +7824,10 @@ C0DE71B10000000000000002 /* AppDelegate+AgentChatNotifications.swift */ = {isa =
 				0A110711000000000000001A /* PromptTurnNotificationHandler.swift in Sources */,
 				C0DEA771000000000000000F /* ProWelcomeChecklist.swift in Sources */,
 					A64610010000000000000001 /* QuitConfirmationAlertPresenter.swift in Sources */,
+					2F0C09000000000000000002 /* QuickTerminalConfiguration.swift in Sources */,
+					2F0C0B000000000000000002 /* QuickTerminalController.swift in Sources */,
+					2F0C0A000000000000000002 /* QuickTerminalPlacement.swift in Sources */,
+					2F0C08000000000000000002 /* QuickTerminalPosition.swift in Sources */,
 				A500RG01 /* ReactGrab.swift in Sources */,
 				A6D1F0000000000000000002 /* ReleasingWindowController.swift in Sources */,
 				EE30D5000000000000000002 /* RemoteDaemonStrings+App.swift in Sources */,

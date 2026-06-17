@@ -164268,25 +164268,48 @@
         }
       }
     },
+    "quickTerminal.windowTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "クイックターミナル"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "퀵 터미널"
+          }
+        }
+      }
+    },
     "settings.globalHotkey.enable": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enable System-Wide Hotkey"
+            "value": "Enable Quick Terminal Hotkey"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "システム全体のホットキーを有効にする"
+            "value": "クイックターミナルのホットキーを有効にする"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "시스템 전체 단축키 활성화"
+            "value": "퀵 터미널 단축키 활성화"
           }
         }
       }
@@ -164297,19 +164320,19 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Turn this on to show or hide all cmux windows from any app."
+            "value": "Turn this on to summon Quick Terminal from any app."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "どのアプリからでも cmux のすべてのウィンドウを表示または非表示にするにはオンにします。"
+            "value": "どのアプリからでもクイックターミナルを呼び出せるようにします。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "이 옵션을 켜면 어떤 앱에서든 모든 cmux 윈도우를 표시하거나 숨길 수 있습니다."
+            "value": "이 옵션을 켜면 어떤 앱에서든 퀵 터미널을 불러올 수 있습니다."
           }
         }
       }
@@ -164320,19 +164343,19 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Press the shortcut from any app to show or hide all cmux windows."
+            "value": "Press the shortcut from any app to show or hide Quick Terminal."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "どのアプリからでもこのショートカットで cmux のすべてのウィンドウを表示または非表示にできます。"
+            "value": "どのアプリからでもこのショートカットでクイックターミナルを表示または非表示にできます。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "어떤 앱에서든 단축키를 눌러 모든 cmux 윈도우를 표시하거나 숨깁니다."
+            "value": "어떤 앱에서든 단축키를 눌러 퀵 터미널을 표시하거나 숨깁니다."
           }
         }
       }
@@ -164343,19 +164366,19 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Use Command, Option, or Control with another key. No extra macOS permission is required."
+            "value": "Quick Terminal slides from the active screen edge and keeps its session running while hidden."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Command、Option、または Control と別のキーを組み合わせてください。追加の macOS 権限は不要です。"
+            "value": "クイックターミナルはアクティブな画面端からスライドし、隠れている間もセッションを維持します。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "Command, Option 또는 Control과 다른 키를 함께 사용하세요. 추가 macOS 권한이 필요하지 않습니다."
+            "value": "퀵 터미널은 활성 화면 가장자리에서 내려오며 숨겨진 동안에도 세션을 유지합니다."
           }
         }
       }
@@ -164366,19 +164389,19 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Show/Hide All Windows"
+            "value": "Toggle Quick Terminal"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "すべてのウィンドウを表示/非表示"
+            "value": "クイックターミナルを切り替え"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "모든 윈도우 표시/숨기기"
+            "value": "퀵 터미널 전환"
           }
         }
       }
@@ -168858,118 +168881,118 @@
     "settings.search.alias.section.globalHotkey": {
       "extractionState": "manual",
       "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "system shortcut global keyboard show hide bring forward لوحة مفاتيح اختصار اختصارات مفتاح سريع أوامر تسجيل مظهر سمة لون ألوان مخطط فاتح داكن نظام وضع النظام عام تقدم"
-          }
-        },
-        "bs": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "system shortcut global keyboard show hide bring forward tastatura prečica prečice hotkey komande tipke snimač izgled tema boja boje shema svijetlo tamno sistem način Sistemski Globalno Naprijed"
-          }
-        },
-        "da": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "system shortcut global keyboard show hide bring forward tastatur genvej genveje hotkey kommandoer taster optager udseende tema farve farver skema lys mørk tilstand Globalt Frem"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "system shortcut global keyboard show hide bring forward tastatur kurzbefehl tastenkürzel hotkey befehle tasten rekorder darstellung design farbe farben schema hell dunkel modus Vor"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "system shortcut global keyboard show hide bring forward"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "system shortcut global keyboard show hide bring forward teclado atajo atajos tecla rápida comandos teclas grabador apariencia tema color colores esquema claro oscuro sistema modo Adelante"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "system shortcut global keyboard show hide bring forward clavier raccourci raccourcis touche globale commandes touches enregistreur apparence thème couleur couleurs schéma clair sombre système mode Général Suivant"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "system shortcut global keyboard show hide bring forward tastiera scorciatoia scorciatoie tasto rapido comandi tasti registratore aspetto tema colore colori schema chiaro scuro sistema modalità Globale Avanti"
+            "value": "system shortcut global keyboard quick terminal quake quick access bring forward"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "system shortcut global keyboard show hide bring forward システム ショートカット グローバル ホットキー キーボード 表示 非表示 前面"
+            "value": "system shortcut global keyboard quick terminal quake quick access bring forward システム ショートカット グローバル ホットキー キーボード 表示 非表示 前面"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "system shortcut global keyboard quick terminal quake quick access bring forward لوحة مفاتيح اختصار اختصارات مفتاح سريع أوامر تسجيل مظهر سمة لون ألوان مخطط فاتح داكن نظام وضع النظام عام تقدم"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "system shortcut global keyboard quick terminal quake quick access bring forward tastatura prečica prečice hotkey komande tipke snimač izgled tema boja boje shema svijetlo tamno sistem način Sistemski Globalno Naprijed"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "system shortcut global keyboard quick terminal quake quick access bring forward tastatur genvej genveje hotkey kommandoer taster optager udseende tema farve farver skema lys mørk tilstand Globalt Frem"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "system shortcut global keyboard quick terminal quake quick access bring forward tastatur kurzbefehl tastenkürzel hotkey befehle tasten rekorder darstellung design farbe farben schema hell dunkel modus Vor"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "system shortcut global keyboard quick terminal quake quick access bring forward teclado atajo atajos tecla rápida comandos teclas grabador apariencia tema color colores esquema claro oscuro sistema modo Adelante"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "system shortcut global keyboard quick terminal quake quick access bring forward clavier raccourci raccourcis touche globale commandes touches enregistreur apparence thème couleur couleurs schéma clair sombre système mode Général Suivant"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "system shortcut global keyboard quick terminal quake quick access bring forward tastiera scorciatoia scorciatoie tasto rapido comandi tasti registratore aspetto tema colore colori schema chiaro scuro sistema modalità Globale Avanti"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "system shortcut global keyboard show hide bring forward 키보드 단축키 핫키 명령 키 기록기 외관 테마 색상 색 구성표 라이트 다크 시스템 모드 전역 앞으로"
+            "value": "system shortcut global keyboard quick terminal quake quick access bring forward 키보드 단축키 핫키 명령 키 기록기 외관 테마 색상 색 구성표 라이트 다크 시스템 모드 전역 앞으로"
           }
         },
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "system shortcut global keyboard show hide bring forward tastatur snarvei snarveier hurtigtast kommandoer taster opptaker utseende tema farge farger skjema lys mørk modus Globalt Fremover"
+            "value": "system shortcut global keyboard quick terminal quake quick access bring forward tastatur snarvei snarveier hurtigtast kommandoer taster opptaker utseende tema farge farger skjema lys mørk modus Globalt Fremover"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "system shortcut global keyboard show hide bring forward klawiatura skrót skróty klawisz polecenia klawisze rejestrator wygląd motyw kolor kolory schemat jasny ciemny tryb Systemowy Globalne Do przodu"
+            "value": "system shortcut global keyboard quick terminal quake quick access bring forward klawiatura skrót skróty klawisz polecenia klawisze rejestrator wygląd motyw kolor kolory schemat jasny ciemny tryb Systemowy Globalne Do przodu"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "system shortcut global keyboard show hide bring forward teclado atalho atalhos tecla rápida comandos teclas gravador aparência tema cor cores esquema claro escuro sistema modo Avançar"
+            "value": "system shortcut global keyboard quick terminal quake quick access bring forward teclado atalho atalhos tecla rápida comandos teclas gravador aparência tema cor cores esquema claro escuro sistema modo Avançar"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "system shortcut global keyboard show hide bring forward клавиатура сочетание клавиш горячая клавиша команды клавиши запись внешний вид тема цвет цвета схема светлый темный система режим Системное Глобальные Вперед Системный Системная"
+            "value": "system shortcut global keyboard quick terminal quake quick access bring forward клавиатура сочетание клавиш горячая клавиша команды клавиши запись внешний вид тема цвет цвета схема светлый темный система режим Системное Глобальные Вперед Системный Системная"
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "system shortcut global keyboard show hide bring forward แป้นพิมพ์ ทางลัด ปุ่มลัด คำสั่ง คีย์ ตัวบันทึก ลักษณะ ธีม สี โครงร่าง สว่าง มืด ระบบ โหมด ทั่วไป ไปข้างหน้า"
+            "value": "system shortcut global keyboard quick terminal quake quick access bring forward แป้นพิมพ์ ทางลัด ปุ่มลัด คำสั่ง คีย์ ตัวบันทึก ลักษณะ ธีม สี โครงร่าง สว่าง มืด ระบบ โหมด ทั่วไป ไปข้างหน้า"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "system shortcut global keyboard show hide bring forward klavye kısayol kısayollar tuşu komutlar tuşlar kaydedici görünüm tema renk renkler şema açık koyu sistem mod Genel İleri"
-          }
-        },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "system shortcut global keyboard show hide bring forward клавіатура скорочення гарячі клавіші команди записувач вигляд тема колір кольори схема світлий темний система режим Системна Глобальна Вперед"
+            "value": "system shortcut global keyboard quick terminal quake quick access bring forward klavye kısayol kısayollar tuşu komutlar tuşlar kaydedici görünüm tema renk renkler şema açık koyu sistem mod Genel İleri"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "system shortcut global keyboard show hide bring forward 键盘 快捷键 热键 命令 按键 录制器 外观 主题 颜色 配色 浅色 深色 系统 模式 全局 前进"
+            "value": "system shortcut global keyboard quick terminal quake quick access bring forward 键盘 快捷键 热键 命令 按键 录制器 外观 主题 颜色 配色 浅色 深色 系统 模式 全局 前进"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "system shortcut global keyboard show hide bring forward 鍵盤 快捷鍵 熱鍵 命令 按鍵 錄製器 外觀 主題 顏色 配色 淺色 深色 系統 模式 全域 下一頁"
+            "value": "system shortcut global keyboard quick terminal quake quick access bring forward 鍵盤 快捷鍵 熱鍵 命令 按鍵 錄製器 外觀 主題 顏色 配色 淺色 深色 系統 模式 全域 下一頁"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "system shortcut global keyboard quick terminal quake quick access bring forward клавіатура скорочення гарячі клавіші команди записувач вигляд тема колір кольори схема світлий темний система режим Системна Глобальна Вперед"
           }
         }
       }
@@ -178247,118 +178270,118 @@
     "settings.search.alias.setting.globalHotkey.enable-hotkey": {
       "extractionState": "manual",
       "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "global hotkey enable system wide show hide all windows لوحة مفاتيح اختصار اختصارات مفتاح سريع أوامر تسجيل مظهر سمة لون ألوان مخطط فاتح داكن نظام وضع كلمة مرور سر رمز اعتماد وصول سماح تعطيل تمكين إذن غير آمن النظام عام"
-          }
-        },
-        "bs": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "global hotkey enable system wide show hide all windows tastatura prečica prečice komande tipke snimač izgled tema boja boje shema svijetlo tamno sistem način lozinka tajna token vjerodajnica pristup dozvoli onemogući omogući dozvola nesigurno Sistemski Globalno"
-          }
-        },
-        "da": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "global hotkey enable system wide show hide all windows tastatur genvej genveje kommandoer taster optager udseende tema farve farver skema lys mørk tilstand adgangskode hemmelighed token legitimationsoplysninger adgang tillad deaktiver aktiver tilladelse usikker Globalt"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "global hotkey enable system wide show hide all windows tastatur kurzbefehl tastenkürzel befehle tasten rekorder darstellung design farbe farben schema hell dunkel modus passwort geheimnis token zugangsdaten zugriff erlauben deaktivieren aktivieren berechtigung unsicher"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "global hotkey enable system wide show hide all windows"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "global hotkey enable system wide show hide all windows teclado atajo atajos tecla rápida comandos teclas grabador apariencia tema color colores esquema claro oscuro sistema modo contraseña secreto token credencial acceso permitir desactivar activar permiso inseguro"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "global hotkey enable system wide show hide all windows clavier raccourci raccourcis touche globale commandes touches enregistreur apparence thème couleur couleurs schéma clair sombre système mode mot de passe secret jeton identifiant accès autoriser désactiver activer autorisation non sécurisé Général"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "global hotkey enable system wide show hide all windows tastiera scorciatoia scorciatoie tasto rapido comandi tasti registratore aspetto tema colore colori schema chiaro scuro sistema modalità password segreto token credenziale accesso consenti disabilita abilita autorizzazione non sicuro Globale"
+            "value": "global hotkey enable system wide quick terminal quick access"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "global hotkey enable system wide show hide all windows グローバルホットキー 有効 システム全体 表示 非表示 全ウィンドウ"
+            "value": "global hotkey enable system wide quick terminal quick access グローバルホットキー 有効 システム全体 表示 非表示 全ウィンドウ"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "global hotkey enable system wide quick terminal quick access لوحة مفاتيح اختصار اختصارات مفتاح سريع أوامر تسجيل مظهر سمة لون ألوان مخطط فاتح داكن نظام وضع كلمة مرور سر رمز اعتماد وصول سماح تعطيل تمكين إذن غير آمن النظام عام"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "global hotkey enable system wide quick terminal quick access tastatura prečica prečice komande tipke snimač izgled tema boja boje shema svijetlo tamno sistem način lozinka tajna token vjerodajnica pristup dozvoli onemogući omogući dozvola nesigurno Sistemski Globalno"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "global hotkey enable system wide quick terminal quick access tastatur genvej genveje kommandoer taster optager udseende tema farve farver skema lys mørk tilstand adgangskode hemmelighed token legitimationsoplysninger adgang tillad deaktiver aktiver tilladelse usikker Globalt"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "global hotkey enable system wide quick terminal quick access tastatur kurzbefehl tastenkürzel befehle tasten rekorder darstellung design farbe farben schema hell dunkel modus passwort geheimnis token zugangsdaten zugriff erlauben deaktivieren aktivieren berechtigung unsicher"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "global hotkey enable system wide quick terminal quick access teclado atajo atajos tecla rápida comandos teclas grabador apariencia tema color colores esquema claro oscuro sistema modo contraseña secreto token credencial acceso permitir desactivar activar permiso inseguro"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "global hotkey enable system wide quick terminal quick access clavier raccourci raccourcis touche globale commandes touches enregistreur apparence thème couleur couleurs schéma clair sombre système mode mot de passe secret jeton identifiant accès autoriser désactiver activer autorisation non sécurisé Général"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "global hotkey enable system wide quick terminal quick access tastiera scorciatoia scorciatoie tasto rapido comandi tasti registratore aspetto tema colore colori schema chiaro scuro sistema modalità password segreto token credenziale accesso consenti disabilita abilita autorizzazione non sicuro Globale"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "global hotkey enable system wide show hide all windows 키보드 단축키 핫키 명령 키 기록기 외관 테마 색상 색 구성표 라이트 다크 시스템 모드 비밀번호 비밀 토큰 자격 증명 접근 허용 비활성화 활성화 권한 안전하지 않음 전역 글로벌 모든 윈도우 표시/숨기기"
+            "value": "global hotkey enable system wide quick terminal quick access 키보드 단축키 핫키 명령 키 기록기 외관 테마 색상 색 구성표 라이트 다크 시스템 모드 비밀번호 비밀 토큰 자격 증명 접근 허용 비활성화 활성화 권한 안전하지 않음 전역 글로벌 모든 윈도우 표시/숨기기"
           }
         },
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "global hotkey enable system wide show hide all windows tastatur snarvei snarveier hurtigtast kommandoer taster opptaker utseende tema farge farger skjema lys mørk modus passord hemmelighet token legitimasjon tilgang tillat deaktiver aktiver tillatelse usikker Globalt"
+            "value": "global hotkey enable system wide quick terminal quick access tastatur snarvei snarveier hurtigtast kommandoer taster opptaker utseende tema farge farger skjema lys mørk modus passord hemmelighet token legitimasjon tilgang tillat deaktiver aktiver tillatelse usikker Globalt"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "global hotkey enable system wide show hide all windows klawiatura skrót skróty klawisz polecenia klawisze rejestrator wygląd motyw kolor kolory schemat jasny ciemny tryb hasło sekret token poświadczenie dostęp zezwól wyłącz włącz uprawnienie niezabezpieczone Systemowy Globalne"
+            "value": "global hotkey enable system wide quick terminal quick access klawiatura skrót skróty klawisz polecenia klawisze rejestrator wygląd motyw kolor kolory schemat jasny ciemny tryb hasło sekret token poświadczenie dostęp zezwól wyłącz włącz uprawnienie niezabezpieczone Systemowy Globalne"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "global hotkey enable system wide show hide all windows teclado atalho atalhos tecla rápida comandos teclas gravador aparência tema cor cores esquema claro escuro sistema modo senha segredo token credencial acesso permitir desativar ativar permissão inseguro"
+            "value": "global hotkey enable system wide quick terminal quick access teclado atalho atalhos tecla rápida comandos teclas gravador aparência tema cor cores esquema claro escuro sistema modo senha segredo token credencial acesso permitir desativar ativar permissão inseguro"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "global hotkey enable system wide show hide all windows клавиатура сочетание клавиш горячая клавиша команды клавиши запись внешний вид тема цвет цвета схема светлый темный система режим пароль секрет токен учетные данные доступ разрешить отключить включить разрешение небезопасно Системное Глобальные Системный Системная"
+            "value": "global hotkey enable system wide quick terminal quick access клавиатура сочетание клавиш горячая клавиша команды клавиши запись внешний вид тема цвет цвета схема светлый темный система режим пароль секрет токен учетные данные доступ разрешить отключить включить разрешение небезопасно Системное Глобальные Системный Системная"
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "global hotkey enable system wide show hide all windows แป้นพิมพ์ ทางลัด ปุ่มลัด คำสั่ง คีย์ ตัวบันทึก ลักษณะ ธีม สี โครงร่าง สว่าง มืด ระบบ โหมด รหัสผ่าน ความลับ โทเค็น ข้อมูลรับรอง เข้าถึง อนุญาต ปิด เปิด สิทธิ์ ไม่ปลอดภัย ทั่วไป"
+            "value": "global hotkey enable system wide quick terminal quick access แป้นพิมพ์ ทางลัด ปุ่มลัด คำสั่ง คีย์ ตัวบันทึก ลักษณะ ธีม สี โครงร่าง สว่าง มืด ระบบ โหมด รหัสผ่าน ความลับ โทเค็น ข้อมูลรับรอง เข้าถึง อนุญาต ปิด เปิด สิทธิ์ ไม่ปลอดภัย ทั่วไป"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "global hotkey enable system wide show hide all windows klavye kısayol kısayollar tuşu komutlar tuşlar kaydedici görünüm tema renk renkler şema açık koyu sistem mod parola gizli token kimlik bilgisi erişim izin ver devre dışı etkinleştir güvensiz Genel"
-          }
-        },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "global hotkey enable system wide show hide all windows клавіатура скорочення гарячі клавіші команди записувач вигляд тема колір кольори схема світлий темний система режим пароль секрет токен облікові дані доступ дозволити вимкнути увімкнути дозвіл небезпечно Системна Глобальна"
+            "value": "global hotkey enable system wide quick terminal quick access klavye kısayol kısayollar tuşu komutlar tuşlar kaydedici görünüm tema renk renkler şema açık koyu sistem mod parola gizli token kimlik bilgisi erişim izin ver devre dışı etkinleştir güvensiz Genel"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "global hotkey enable system wide show hide all windows 键盘 快捷键 热键 命令 按键 录制器 外观 主题 颜色 配色 浅色 深色 系统 模式 密码 密钥 令牌 凭据 访问 允许 禁用 启用 权限 不安全 全局"
+            "value": "global hotkey enable system wide quick terminal quick access 键盘 快捷键 热键 命令 按键 录制器 外观 主题 颜色 配色 浅色 深色 系统 模式 密码 密钥 令牌 凭据 访问 允许 禁用 启用 权限 不安全 全局"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "global hotkey enable system wide show hide all windows 鍵盤 快捷鍵 熱鍵 命令 按鍵 錄製器 外觀 主題 顏色 配色 淺色 深色 系統 模式 密碼 密鑰 權杖 憑證 存取 允許 停用 啟用 權限 不安全 全域"
+            "value": "global hotkey enable system wide quick terminal quick access 鍵盤 快捷鍵 熱鍵 命令 按鍵 錄製器 外觀 主題 顏色 配色 淺色 深色 系統 模式 密碼 密鑰 權杖 憑證 存取 允許 停用 啟用 權限 不安全 全域"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "global hotkey enable system wide quick terminal quick access клавіатура скорочення гарячі клавіші команди записувач вигляд тема колір кольори схема світлий темний система режим пароль секрет токен облікові дані доступ дозволити вимкнути увімкнути дозвіл небезпечно Системна Глобальна"
           }
         }
       }

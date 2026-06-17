@@ -1453,6 +1453,7 @@ private let cmuxAuxiliaryWindowIdentifiers: Set<String> = [
     "cmux.folderDragIcon",
     "cmux.pdfPreviewChromeDebug",
     "cmux.proBadgeDebug",
+    "cmux.quickTerminal",
     "cmux.recentlyClosedHistory",
     "cmux.splitButtonLayoutDebug",
     "cmux.tabBarBackdropLab",

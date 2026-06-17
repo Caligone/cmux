@@ -66,6 +66,21 @@ public struct GhosttyConfig {
     /// background.
     public var splitDividerColor: NSColor?
 
+    /// The raw `keybind` directive value binding the global Quick Terminal
+    /// toggle (action `toggle_quick_terminal`), or `nil` when unset. Parsing
+    /// into a stored shortcut happens in the app target, which owns the
+    /// `StoredShortcut` type; the config only retains the raw assignment so it
+    /// stays free of the app's shortcut model.
+    public var quickTerminalKeybindRaw: String?
+    /// The configured `quick-terminal-position` directive value (lowercased),
+    /// or `nil` when unset.
+    public var quickTerminalPosition: String?
+    /// The configured `quick-terminal-screen-fraction`, or `nil` when unset.
+    public var quickTerminalScreenFraction: Double?
+    /// The configured `quick-terminal-animation-duration` in seconds, or `nil`
+    /// when unset.
+    public var quickTerminalAnimationDuration: TimeInterval?
+
     // Colors (from theme or config)
     /// The terminal background color.
     public var backgroundColor: NSColor = NSColor(hex: "#272822")!
@@ -543,6 +558,10 @@ public struct GhosttyConfig {
                     }
                 case "working-directory":
                     workingDirectory = value
+                case "keybind":
+                    if Self.ghosttyKeybindAction(value) == "toggle_quick_terminal" {
+                        quickTerminalKeybindRaw = value
+                    }
                 case "scrollback-limit":
                     if let limit = Self.parseIntegerLiteral(value) {
                         scrollbackLimit = limit
@@ -656,6 +675,16 @@ public struct GhosttyConfig {
                 case "split-divider-color":
                     if let color = NSColor(hex: value) {
                         splitDividerColor = color
+                    }
+                case "quick-terminal-position":
+                    quickTerminalPosition = value.lowercased()
+                case "quick-terminal-screen-fraction":
+                    if let fraction = Double(value) {
+                        quickTerminalScreenFraction = fraction
+                    }
+                case "quick-terminal-animation-duration":
+                    if let duration = Double(value) {
+                        quickTerminalAnimationDuration = duration
                     }
                 case "sidebar-background":
                     rawSidebarBackground = value
@@ -928,6 +957,16 @@ public struct GhosttyConfig {
             return nil
         }
         return parsed
+    }
+
+    /// Returns the action portion of a Ghostty `keybind` assignment
+    /// (`<trigger>=<action>`), or `nil` when the value is not a single
+    /// trigger/action pair. Used to keep only the Quick Terminal binding.
+    private static func ghosttyKeybindAction(_ value: String) -> String? {
+        let parts = value.split(separator: "=", maxSplits: 1, omittingEmptySubsequences: false)
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+        guard parts.count == 2 else { return nil }
+        return parts[1]
     }
 
     /// Clamps a sidebar font size into the supported range.
