@@ -9,6 +9,8 @@ struct QuickTerminalPlacement: Equatable {
 
     static func placement(
         forVisibleFrame visibleFrame: NSRect,
+        fullFrame: NSRect? = nil,
+        preferredHeight: CGFloat? = nil,
         configuration: QuickTerminalConfiguration = .fallback
     ) -> QuickTerminalPlacement {
         let topInset = min(max(visibleFrame.height * 0.015, defaultTopInsetRange.lowerBound), defaultTopInsetRange.upperBound)
@@ -20,14 +22,18 @@ struct QuickTerminalPlacement: Equatable {
         let hidden: NSRect
         switch configuration.position {
         case .top:
-            let width = max(1, visibleFrame.width - horizontalInset * 2)
-            let maxHeight = max(1, visibleFrame.height - topInset)
-            let minHeight = min(420, maxHeight)
-            let height = min(max(minHeight, visibleFrame.height * configuration.screenFraction), maxHeight)
-            let x = visibleFrame.minX + (visibleFrame.width - width) / 2
-            let y = visibleFrame.maxY - topInset - height
+            // Full-width quake dropdown, flush to the physical top of the screen.
+            // Width and position are fixed; only the height is user-adjustable and
+            // persisted between toggles (preferredHeight). screenFraction is the
+            // initial height until the user resizes.
+            let frame = fullFrame ?? visibleFrame
+            let width = frame.width
+            let defaultHeight = frame.height * configuration.screenFraction
+            let height = min(max(preferredHeight ?? defaultHeight, 120), frame.height)
+            let x = frame.minX
+            let y = frame.maxY - height
             shown = NSRect(x: x, y: y, width: width, height: height)
-            hidden = NSRect(x: x, y: visibleFrame.maxY + topInset, width: width, height: height)
+            hidden = NSRect(x: x, y: frame.maxY, width: width, height: height)
         case .bottom:
             let width = max(1, visibleFrame.width - horizontalInset * 2)
             let maxHeight = max(1, visibleFrame.height - topInset)
@@ -65,9 +71,17 @@ struct QuickTerminalPlacement: Equatable {
         return QuickTerminalPlacement(visibleFrame: shown, hiddenFrame: hidden)
     }
 
-    static func current(configuration: QuickTerminalConfiguration = .current()) -> QuickTerminalPlacement? {
+    static func current(
+        configuration: QuickTerminalConfiguration = .current(),
+        preferredHeight: CGFloat? = nil
+    ) -> QuickTerminalPlacement? {
         guard let screen = preferredScreen() else { return nil }
-        return placement(forVisibleFrame: screen.visibleFrame, configuration: configuration)
+        return placement(
+            forVisibleFrame: screen.visibleFrame,
+            fullFrame: screen.frame,
+            preferredHeight: preferredHeight,
+            configuration: configuration
+        )
     }
 
     private static func preferredScreen() -> NSScreen? {

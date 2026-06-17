@@ -94,7 +94,21 @@ func configureCmuxMainWindowDragBehavior(_ window: NSWindow) {
 }
 
 @MainActor
-final class CmuxMainWindow: NSWindow {
+final class CmuxMainWindow: NSPanel {
+    /// When true, this window is the Quick Terminal dropdown: a non-activating
+    /// panel that overlays third-party fullscreen Spaces (iTerm2 trick). Normal
+    /// windows keep the classic NSWindow behavior (can become main, never
+    /// auto-hide on app deactivation).
+    var isQuickTerminalPanel = false
+
+    // NSPanel defaults differ from NSWindow in two ways that would break normal
+    // cmux windows; we neutralize both unless this is the quick terminal:
+    // 1. canBecomeMain defaults to false on NSPanel — but cmux relies on
+    //    isMainWindow / NSApp.mainWindow for focus, command palette, active
+    //    context. Normal windows must stay "main"; the quick terminal must not
+    //    (so it doesn't pull the app's Space forward).
+    override var canBecomeMain: Bool { !isQuickTerminalPanel }
+    override var canBecomeKey: Bool { true }
 
     /// No content may resize this window past the attached display union. The content view
     /// hosts AppKit subtrees whose subviews carry REQUIRED autoresizing-mask
@@ -158,6 +172,8 @@ final class CmuxMainWindow: NSWindow {
         return capped
     }
 
+||||||| parent of fc43668486 (Quick Terminal: overlay fullscreen + full-width top + persistance hauteur)
+final class CmuxMainWindow: NSWindow {
     static var minimumContentSize: NSSize {
         NSSize(
             width: CGFloat(SessionPersistencePolicy.minimumWindowWidth),

@@ -8728,7 +8728,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
 
         // Use the current key window's size for new windows so Cmd+Shift+N
         // creates a window matching the previous one's dimensions.
-        let styleMask: NSWindow.StyleMask = [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView]
+        var styleMask: NSWindow.StyleMask = [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView]
+        // The quick terminal is a non-activating panel so it can overlay a
+        // third-party fullscreen Space without switching the app's Space.
+        if isQuickTerminal { styleMask.insert(.nonactivatingPanel) }
         let restoredFrame = resolvedWindowFrame(from: sessionWindowSnapshot)
         let requestedInitialFrame = initialFrame ?? restoredFrame
         let sourceContext = requestedInitialFrame == nil
@@ -8769,6 +8772,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
             backing: .buffered,
             defer: false
         )
+        window.isQuickTerminalPanel = isQuickTerminal
+        // NSPanel defaults hidesOnDeactivate to true, which would make normal
+        // cmux windows vanish when switching apps. Force the NSWindow behavior.
+        window.hidesOnDeactivate = false
         let minimumWindowSize = CmuxMainWindow.minimumContentSize
         window.minSize = minimumWindowSize
         window.contentMinSize = minimumWindowSize
@@ -9242,10 +9249,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
 
     @discardableResult
     func focusQuickTerminalWindow(_ window: NSWindow) -> Bool {
+        // Empty ActivationOptions (NOT .activateAllWindows): activating *all*
+        // cmux windows pulls them to the front, which forces macOS to switch
+        // away from a third-party fullscreen Space back to cmux's Space (the
+        // desktop). With [] only the app activates; the quick terminal window —
+        // already makeKeyAndOrderFront + .canJoinAllSpaces — materializes in the
+        // current Space, overlaying the fullscreen app like iTerm2/Ghostty.
         mainWindowVisibilityController.focus(
             window,
             reason: .globalHotkey,
-            activation: .runningApplication([.activateAllWindows]),
+            activation: .runningApplication([]),
             respectActivationSuppression: false
         )
     }
