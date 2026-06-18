@@ -71,12 +71,30 @@ struct QuickTerminalPlacement: Equatable {
         return QuickTerminalPlacement(visibleFrame: shown, hiddenFrame: hidden)
     }
 
+    /// `preferredHeightForScreen` is resolved against the screen the quake will
+    /// actually open on, so the height can be remembered per display.
     static func current(
         configuration: QuickTerminalConfiguration = .current(),
-        preferredHeight: CGFloat? = nil
+        preferredHeightForScreen: (NSScreen) -> CGFloat? = { _ in nil }
     ) -> QuickTerminalPlacement? {
         guard let screen = preferredScreen() else { return nil }
         return placement(
+            forVisibleFrame: screen.visibleFrame,
+            fullFrame: screen.frame,
+            preferredHeight: preferredHeightForScreen(screen),
+            configuration: configuration
+        )
+    }
+
+    /// Placement forced onto a specific screen — used at hide time so the window
+    /// slides off *its own* screen instead of the mouse's (which, with stacked
+    /// displays, made the hide animation drift across screens).
+    static func current(
+        on screen: NSScreen,
+        configuration: QuickTerminalConfiguration = .current(),
+        preferredHeight: CGFloat? = nil
+    ) -> QuickTerminalPlacement {
+        placement(
             forVisibleFrame: screen.visibleFrame,
             fullFrame: screen.frame,
             preferredHeight: preferredHeight,
@@ -84,7 +102,7 @@ struct QuickTerminalPlacement: Equatable {
         )
     }
 
-    private static func preferredScreen() -> NSScreen? {
+    static func preferredScreen() -> NSScreen? {
         let mouseLocation = NSEvent.mouseLocation
         if let screen = NSScreen.screens.first(where: { NSMouseInRect(mouseLocation, $0.frame, false) }) {
             return screen

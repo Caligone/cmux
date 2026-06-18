@@ -70,20 +70,25 @@ final class QuickTerminalController {
     /// of pulling a cmux window forward — which would switch away from the
     /// fullscreen Space (the "ramène au bureau" bug).
     private var previousApp: NSRunningApplication?
+    /// Tracks whether the in-progress hide restored a previous app, so
+    /// completeHide() knows whether to NSApp.hide as a fallback. Reset per hide.
+    private var restoredPreviousAppForCurrentHide = false
     private var animationPhase = AnimationPhase.idle
     private var pendingAnimationIntent: PendingAnimationIntent?
     private let configurationProvider: @MainActor () -> QuickTerminalConfiguration
-    private let placementProvider: @MainActor (QuickTerminalConfiguration, CGFloat?) -> QuickTerminalPlacement?
+    private let placementProvider: @MainActor (QuickTerminalConfiguration, @escaping (NSScreen) -> CGFloat?) -> QuickTerminalPlacement?
     private let dependencies: Dependencies
-    /// User-adjusted height, remembered between toggles (full-width top dropdown:
-    /// width/position are fixed, only height varies). nil → use screenFraction.
-    private var rememberedHeight: CGFloat?
+    /// User-adjusted height, remembered between toggles per display (full-width
+    /// top dropdown: width/position are fixed, only height varies). Keyed by
+    /// NSScreen.cmuxDisplayID so each monitor keeps its own size. Empty → use
+    /// screenFraction.
+    private var rememberedHeightByScreen: [UInt32: CGFloat] = [:]
 
     init(
         appDelegate: AppDelegate,
         configurationProvider: @escaping @MainActor () -> QuickTerminalConfiguration = { QuickTerminalConfiguration.current() },
-        placementProvider: @escaping @MainActor (QuickTerminalConfiguration, CGFloat?) -> QuickTerminalPlacement? = { configuration, preferredHeight in
-            QuickTerminalPlacement.current(configuration: configuration, preferredHeight: preferredHeight)
+        placementProvider: @escaping @MainActor (QuickTerminalConfiguration, @escaping (NSScreen) -> CGFloat?) -> QuickTerminalPlacement? = { configuration, heightForScreen in
+            QuickTerminalPlacement.current(configuration: configuration, preferredHeightForScreen: heightForScreen)
         },
         dependencies: Dependencies? = nil
     ) {
@@ -100,7 +105,7 @@ final class QuickTerminalController {
 
         let configuration = configurationProvider()
         guard let appDelegate,
-              let placement = placementProvider(configuration, rememberedHeight) else {
+              let placement = resolvePlacement(configuration) else {
             return
         }
 
@@ -143,10 +148,12 @@ final class QuickTerminalController {
         }
 
         let configuration = configurationProvider()
-        guard let placement = placementProvider(configuration, rememberedHeight) else {
-            restorePreviousApp()
+        guard let placement = resolvePlacement(configuration) else {
+            let restored = restorePreviousApp()
             window.orderOut(nil)
             window.setSoftHiddenForVisibilityController(true)
+            if !restored { NSApp.hide(nil) }
+            restoredPreviousAppForCurrentHide = false
             return
         }
         hide(window, placement: placement, configuration: configuration)
@@ -154,6 +161,17 @@ final class QuickTerminalController {
 
     private func shouldHide(_ window: NSWindow) -> Bool {
         isShown(window)
+    }
+
+    private func rememberedHeight(for screen: NSScreen) -> CGFloat? {
+        guard let id = screen.cmuxDisplayID else { return nil }
+        return rememberedHeightByScreen[id]
+    }
+
+    private func resolvePlacement(_ configuration: QuickTerminalConfiguration) -> QuickTerminalPlacement? {
+        placementProvider(configuration) { [weak self] screen in
+            self?.rememberedHeight(for: screen)
+        }
     }
 
     private func queueToggleIfAnimating() -> Bool {
@@ -188,7 +206,7 @@ final class QuickTerminalController {
 
         let configuration = configurationProvider()
         guard let appDelegate,
-              let placement = placementProvider(configuration, rememberedHeight) else {
+              let placement = resolvePlacement(configuration) else {
             return
         }
 
@@ -291,7 +309,7 @@ final class QuickTerminalController {
 
     private func hide(
         _ window: CmuxMainWindow,
-        placement: QuickTerminalPlacement,
+        placement givenPlacement: QuickTerminalPlacement,
         configuration: QuickTerminalConfiguration
     ) {
         // Restore focus to the previously-frontmost app BEFORE hiding, so macOS
@@ -300,9 +318,25 @@ final class QuickTerminalController {
         // orderOut for the same reason Ghostty does it pre-animation.
         restorePreviousApp()
 
-        // Remember the height the user left the window at, so the next toggle
-        // reopens at the same size (width/position are fixed for the top dropdown).
-        rememberedHeight = window.frame.height
+        // Compute the hide placement on the window's OWN screen, not the mouse's.
+        // With stacked displays the mouse can be on another screen, which made the
+        // window slide off across screens. window.frame.height keeps its size.
+        let placement: QuickTerminalPlacement
+        if let screen = window.screen {
+            placement = QuickTerminalPlacement.current(
+                on: screen,
+                configuration: configuration,
+                preferredHeight: window.frame.height
+            )
+        } else {
+            placement = givenPlacement
+        }
+
+        // Remember the height per display, so reopening on the same monitor
+        // restores its size (width/position are fixed for the top dropdown).
+        if let id = window.screen?.cmuxDisplayID {
+            rememberedHeightByScreen[id] = window.frame.height
+        }
 
         if placement.hiddenFrame.equalTo(placement.visibleFrame) {
             completeHide(window, placement: placement)
@@ -325,12 +359,22 @@ final class QuickTerminalController {
         window.setFrame(placement.visibleFrame, display: false)
         window.setSoftHiddenForVisibilityController(true)
         animationPhase = .idle
+        // If no previous app was restored, hiding just the window leaves cmux
+        // frontmost-but-invisible (it keeps focus while hidden). Hide the whole
+        // app so macOS hands focus to whatever is behind it.
+        if !restoredPreviousAppForCurrentHide {
+            NSApp.hide(nil)
+        }
+        restoredPreviousAppForCurrentHide = false
     }
 
-    private func restorePreviousApp() {
-        guard let previousApp else { return }
+    @discardableResult
+    private func restorePreviousApp() -> Bool {
+        guard let previousApp else { return false }
         self.previousApp = nil
-        guard !previousApp.isTerminated else { return }
+        guard !previousApp.isTerminated else { return false }
         previousApp.activate()
+        restoredPreviousAppForCurrentHide = true
+        return true
     }
 }
