@@ -293,18 +293,23 @@ final class QuickTerminalController {
             return
         }
 
-        animationPhase = .showing
-        window.setFrame(placement.hiddenFrame, display: false)
+        // No slide: the slide starts from hiddenFrame (positioned above the target
+        // screen), which on a vertically-stacked multi-monitor setup lands inside
+        // the *other* screen and flashes there. Show the window directly at its
+        // final visible frame on the target screen instead — no cross-screen flash.
+        animationPhase = .idle
+        window.orderOut(nil)
+        NSAnimationContext.beginGrouping()
+        NSAnimationContext.current.duration = 0
+        NSAnimationContext.current.allowsImplicitAnimation = false
+        window.setFrame(placement.visibleFrame, display: false)
+        NSAnimationContext.endGrouping()
         window.setSoftHiddenForVisibilityController(false)
         _ = dependencies.focusQuickTerminalWindow(appDelegate, window)
 #if DEBUG
-        cmuxDebugLog("quickTerminal.show frame={\(NSStringFromRect(placement.visibleFrame))}")
+        cmuxDebugLog("quickTerminal.show visible={\(NSStringFromRect(placement.visibleFrame))}")
 #endif
-        dependencies.animateFrame(window, placement.visibleFrame, configuration.animationDuration) { [weak self] in
-            guard let self else { return }
-            self.animationPhase = .idle
-            self.runPendingAnimationIntent()
-        }
+        runPendingAnimationIntent()
     }
 
     private func hide(
@@ -338,20 +343,13 @@ final class QuickTerminalController {
             rememberedHeightByScreen[id] = window.frame.height
         }
 
-        if placement.hiddenFrame.equalTo(placement.visibleFrame) {
-            completeHide(window, placement: placement)
-            return
-        }
-
-        animationPhase = .hiding
+        // No slide: hiding directly avoids the off-screen hiddenFrame (above the
+        // target screen) which flashes on the other monitor when displays stack.
 #if DEBUG
-        cmuxDebugLog("quickTerminal.hide frame={\(NSStringFromRect(placement.hiddenFrame))}")
+        cmuxDebugLog("quickTerminal.hide direct")
 #endif
-        dependencies.animateFrame(window, placement.hiddenFrame, configuration.animationDuration * 0.8) { [weak self, window] in
-            guard let self else { return }
-            self.completeHide(window, placement: placement)
-            self.runPendingAnimationIntent()
-        }
+        completeHide(window, placement: placement)
+        runPendingAnimationIntent()
     }
 
     private func completeHide(_ window: CmuxMainWindow, placement: QuickTerminalPlacement) {
