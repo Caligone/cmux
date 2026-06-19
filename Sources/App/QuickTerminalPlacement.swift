@@ -22,18 +22,22 @@ struct QuickTerminalPlacement: Equatable {
         let hidden: NSRect
         switch configuration.position {
         case .top:
-            // Full-width quake dropdown, flush to the physical top of the screen.
-            // Width and position are fixed; only the height is user-adjustable and
-            // persisted between toggles (preferredHeight). screenFraction is the
-            // initial height until the user resizes.
+            // Full-width quake dropdown anchored on the PHYSICAL top edge
+            // (frame.maxY). As a .popUpMenu panel it sits above the menu-bar layer,
+            // so it can cover that band — which is exactly what's needed when
+            // overlaying a fullscreen app on an external display (the menu bar is
+            // hidden there, and anchoring on visibleFrame.maxY left a menu-bar-height
+            // gap above the window).
             let frame = fullFrame ?? visibleFrame
+            let topY = frame.maxY
             let width = frame.width
-            let defaultHeight = frame.height * configuration.screenFraction
-            let height = min(max(preferredHeight ?? defaultHeight, 120), frame.height)
+            let maxHeight = topY - frame.minY
+            let defaultHeight = maxHeight * configuration.screenFraction
+            let height = min(max(preferredHeight ?? defaultHeight, 120), maxHeight)
             let x = frame.minX
-            let y = frame.maxY - height
+            let y = topY - height
             shown = NSRect(x: x, y: y, width: width, height: height)
-            hidden = NSRect(x: x, y: frame.maxY, width: width, height: height)
+            hidden = NSRect(x: x, y: topY, width: width, height: height)
         case .bottom:
             let width = max(1, visibleFrame.width - horizontalInset * 2)
             let maxHeight = max(1, visibleFrame.height - topInset)
