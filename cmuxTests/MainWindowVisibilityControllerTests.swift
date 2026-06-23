@@ -513,7 +513,7 @@ final class MainWindowVisibilityControllerTests: XCTestCase {
         let controller = QuickTerminalController(
             appDelegate: appDelegate,
             configurationProvider: { .fallback },
-            placementProvider: { _, _ in placement },
+            placementProvider: { _, _, _ in placement },
             dependencies: makeQuickTerminalDependencies(
                 createMainWindow: { _, _, snapshot in
                     createdSnapshots.append(snapshot)
@@ -558,7 +558,7 @@ final class MainWindowVisibilityControllerTests: XCTestCase {
         let controller = QuickTerminalController(
             appDelegate: appDelegate,
             configurationProvider: { .fallback },
-            placementProvider: { _, _ in placement },
+            placementProvider: { _, _, _ in placement },
             dependencies: makeQuickTerminalDependencies(
                 createMainWindow: { _, _, snapshot in
                     createdSnapshots.append(snapshot)
@@ -607,7 +607,7 @@ final class MainWindowVisibilityControllerTests: XCTestCase {
         let controller = QuickTerminalController(
             appDelegate: appDelegate,
             configurationProvider: { configuration },
-            placementProvider: { _, _ in placement },
+            placementProvider: { _, _, _ in placement },
             dependencies: makeQuickTerminalDependencies(
                 animateFrame: { _, _, _, completion in
                     animationCount += 1
@@ -642,7 +642,7 @@ final class MainWindowVisibilityControllerTests: XCTestCase {
         let controller = QuickTerminalController(
             appDelegate: appDelegate,
             configurationProvider: { configuration },
-            placementProvider: { _, _ in placement },
+            placementProvider: { _, _, _ in placement },
             dependencies: makeQuickTerminalDependencies(
                 createMainWindow: { _, _, _ in windowId },
                 windowForMainWindowId: { _, id in id == windowId ? window : nil },
@@ -696,7 +696,7 @@ final class MainWindowVisibilityControllerTests: XCTestCase {
         let controller = QuickTerminalController(
             appDelegate: appDelegate,
             configurationProvider: { configuration },
-            placementProvider: { _, _ in placement },
+            placementProvider: { _, _, _ in placement },
             dependencies: makeQuickTerminalDependencies(
                 createMainWindow: { _, _, _ in windowId },
                 windowForMainWindowId: { _, id in id == windowId ? window : nil },
@@ -750,7 +750,7 @@ final class MainWindowVisibilityControllerTests: XCTestCase {
         let controller = QuickTerminalController(
             appDelegate: appDelegate,
             configurationProvider: { configuration },
-            placementProvider: { _, _ in placement },
+            placementProvider: { _, _, _ in placement },
             dependencies: makeQuickTerminalDependencies(
                 createMainWindow: { _, _, _ in windowId },
                 windowForMainWindowId: { _, id in id == windowId ? window : nil },

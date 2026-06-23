@@ -76,7 +76,7 @@ final class QuickTerminalController {
     private var animationPhase = AnimationPhase.idle
     private var pendingAnimationIntent: PendingAnimationIntent?
     private let configurationProvider: @MainActor () -> QuickTerminalConfiguration
-    private let placementProvider: @MainActor (QuickTerminalConfiguration, @escaping (NSScreen) -> CGFloat?) -> QuickTerminalPlacement?
+    private let placementProvider: @MainActor (QuickTerminalConfiguration, Bool, @escaping (NSScreen) -> CGFloat?) -> QuickTerminalPlacement?
     private let dependencies: Dependencies
     /// User-adjusted height, remembered between toggles per display (full-width
     /// top dropdown: width/position are fixed, only height varies). Keyed by
@@ -87,8 +87,12 @@ final class QuickTerminalController {
     init(
         appDelegate: AppDelegate,
         configurationProvider: @escaping @MainActor () -> QuickTerminalConfiguration = { QuickTerminalConfiguration.current() },
-        placementProvider: @escaping @MainActor (QuickTerminalConfiguration, @escaping (NSScreen) -> CGFloat?) -> QuickTerminalPlacement? = { configuration, heightForScreen in
-            QuickTerminalPlacement.current(configuration: configuration, preferredHeightForScreen: heightForScreen)
+        placementProvider: @escaping @MainActor (QuickTerminalConfiguration, Bool, @escaping (NSScreen) -> CGFloat?) -> QuickTerminalPlacement? = { configuration, overlayingFullscreen, heightForScreen in
+            QuickTerminalPlacement.current(
+                configuration: configuration,
+                overlayingFullscreen: overlayingFullscreen,
+                preferredHeightForScreen: heightForScreen
+            )
         },
         dependencies: Dependencies? = nil
     ) {
@@ -169,9 +173,18 @@ final class QuickTerminalController {
     }
 
     private func resolvePlacement(_ configuration: QuickTerminalConfiguration) -> QuickTerminalPlacement? {
-        placementProvider(configuration) { [weak self] screen in
+        placementProvider(configuration, isOverlayingThirdPartyApp()) { [weak self] screen in
             self?.rememberedHeight(for: screen)
         }
+    }
+
+    /// Heuristic for "the quake is dropping over a third-party (likely
+    /// fullscreen) app": the frontmost app is not cmux. Used to anchor the quake
+    /// on the physical top edge, since NSScreen keeps reporting the desktop
+    /// Space's menu-bar inset even when the app underneath is fullscreen.
+    private func isOverlayingThirdPartyApp() -> Bool {
+        guard let frontmost = NSWorkspace.shared.frontmostApplication else { return false }
+        return frontmost != .current
     }
 
     private func queueToggleIfAnimating() -> Bool {

@@ -292,6 +292,12 @@ final class CmuxMainWindow: NSWindow {
     /// otherwise be stranded off-screen (e.g. a display was disconnected), so a
     /// genuinely lost window can still be pulled back into view.
     override func constrainFrameRect(_ frameRect: NSRect, to screen: NSScreen?) -> NSRect {
+        // The Quick Terminal positions itself (full-width, anchored on the
+        // physical top edge when overlaying a fullscreen app). It must be allowed
+        // to cover the menu-bar band, so never clamp it.
+        if isQuickTerminalPanel {
+            return frameRect
+        }
         if Self.shouldPreserveFrameDuringConstrain(
             frameRect,
             visibleFrames: NSScreen.screens.map(\.visibleFrame)

@@ -11,6 +11,8 @@ struct QuickTerminalPlacement: Equatable {
         forVisibleFrame visibleFrame: NSRect,
         fullFrame: NSRect? = nil,
         preferredHeight: CGFloat? = nil,
+        overlayingFullscreen: Bool = false,
+        topSafeAreaInset: CGFloat = 0,
         configuration: QuickTerminalConfiguration = .fallback
     ) -> QuickTerminalPlacement {
         let topInset = min(max(visibleFrame.height * 0.015, defaultTopInsetRange.lowerBound), defaultTopInsetRange.upperBound)
@@ -23,14 +25,17 @@ struct QuickTerminalPlacement: Equatable {
         switch configuration.position {
         case .top:
             // Full-width quake dropdown. Width spans the physical screen edge to
-            // edge (fullFrame); the TOP anchors on visibleFrame.maxY — the area
-            // below the menu bar. This self-adjusts: with the menu bar visible the
-            // window sits just under it; when an app is fullscreen on the target
-            // screen the menu bar is hidden so visibleFrame.maxY rises to the
-            // physical top. Anchoring on frame.maxY pushed the window UNDER the
-            // menu bar on the main screen.
+            // edge (fullFrame). The TOP normally anchors on visibleFrame.maxY (just
+            // below the menu bar) — anchoring on frame.maxY would push the window
+            // UNDER the menu bar on the main screen.
+            // Exception: when overlaying a third-party fullscreen app, NSScreen
+            // still reports the desktop Space's visibleFrame (menu-bar inset
+            // included), so visibleFrame.maxY leaves a menu-bar-height gap above
+            // the window. There the menu bar is hidden, so anchor higher — but on
+            // a notched display stop at the safe-area top (frame.maxY minus the
+            // notch height), otherwise content would slide under the notch.
             let frame = fullFrame ?? visibleFrame
-            let topY = visibleFrame.maxY
+            let topY = overlayingFullscreen ? (frame.maxY - topSafeAreaInset) : visibleFrame.maxY
             let width = frame.width
             let maxHeight = topY - frame.minY
             let defaultHeight = maxHeight * configuration.screenFraction
@@ -80,6 +85,7 @@ struct QuickTerminalPlacement: Equatable {
     /// actually open on, so the height can be remembered per display.
     static func current(
         configuration: QuickTerminalConfiguration = .current(),
+        overlayingFullscreen: Bool = false,
         preferredHeightForScreen: (NSScreen) -> CGFloat? = { _ in nil }
     ) -> QuickTerminalPlacement? {
         guard let screen = preferredScreen() else { return nil }
@@ -87,6 +93,8 @@ struct QuickTerminalPlacement: Equatable {
             forVisibleFrame: screen.visibleFrame,
             fullFrame: screen.frame,
             preferredHeight: preferredHeightForScreen(screen),
+            overlayingFullscreen: overlayingFullscreen,
+            topSafeAreaInset: screen.safeAreaInsets.top,
             configuration: configuration
         )
     }
@@ -97,12 +105,15 @@ struct QuickTerminalPlacement: Equatable {
     static func current(
         on screen: NSScreen,
         configuration: QuickTerminalConfiguration = .current(),
-        preferredHeight: CGFloat? = nil
+        preferredHeight: CGFloat? = nil,
+        overlayingFullscreen: Bool = false
     ) -> QuickTerminalPlacement {
         placement(
             forVisibleFrame: screen.visibleFrame,
             fullFrame: screen.frame,
             preferredHeight: preferredHeight,
+            overlayingFullscreen: overlayingFullscreen,
+            topSafeAreaInset: screen.safeAreaInsets.top,
             configuration: configuration
         )
     }
