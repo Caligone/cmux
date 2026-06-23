@@ -22,14 +22,15 @@ struct QuickTerminalPlacement: Equatable {
         let hidden: NSRect
         switch configuration.position {
         case .top:
-            // Full-width quake dropdown anchored on the PHYSICAL top edge
-            // (frame.maxY). As a .popUpMenu panel it sits above the menu-bar layer,
-            // so it can cover that band — which is exactly what's needed when
-            // overlaying a fullscreen app on an external display (the menu bar is
-            // hidden there, and anchoring on visibleFrame.maxY left a menu-bar-height
-            // gap above the window).
+            // Full-width quake dropdown. Width spans the physical screen edge to
+            // edge (fullFrame); the TOP anchors on visibleFrame.maxY — the area
+            // below the menu bar. This self-adjusts: with the menu bar visible the
+            // window sits just under it; when an app is fullscreen on the target
+            // screen the menu bar is hidden so visibleFrame.maxY rises to the
+            // physical top. Anchoring on frame.maxY pushed the window UNDER the
+            // menu bar on the main screen.
             let frame = fullFrame ?? visibleFrame
-            let topY = frame.maxY
+            let topY = visibleFrame.maxY
             let width = frame.width
             let maxHeight = topY - frame.minY
             let defaultHeight = maxHeight * configuration.screenFraction
