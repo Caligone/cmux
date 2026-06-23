@@ -17,11 +17,28 @@ enum CmuxModalAlertPresentation {
     case appModal(hostWindowHadAttachedSheet: Bool)
 }
 
-private extension NSWindow {
+extension NSWindow {
     /// Whether this window is one of cmux's main windows.
     var isCmuxMainWindow: Bool {
         guard let raw = identifier?.rawValue else { return false }
         return raw == "cmux.main" || raw.hasPrefix("cmux.main.")
+    }
+
+    /// Whether this window is the Quick Terminal dropdown panel.
+    ///
+    /// It carries the identifier `cmux.quickTerminal` and floats above regular
+    /// windows. A modal sheet must attach to it (not to a regular main window
+    /// behind it) when it is the active window, otherwise the sheet is hidden
+    /// beneath the floating panel.
+    var isCmuxQuickTerminalWindow: Bool {
+        identifier?.rawValue == "cmux.quickTerminal"
+    }
+
+    /// Windows that can host a modal sheet: regular main windows plus the Quick
+    /// Terminal panel (so a confirmation raised from the quake attaches to it
+    /// and renders above the floating panel instead of behind it).
+    var isCmuxModalHostWindow: Bool {
+        isCmuxMainWindow || isCmuxQuickTerminalWindow
     }
 }
 
@@ -38,12 +55,14 @@ extension NSApplication {
     ///   (e.g. a `TabManager`'s own owning window).
     @MainActor
     func cmuxMainWindowForModalPresentation(preferring preferredWindow: NSWindow? = nil) -> NSWindow? {
-        if let preferredWindow, preferredWindow.isVisible, preferredWindow.isCmuxMainWindow {
+        if let preferredWindow, preferredWindow.isVisible, preferredWindow.isCmuxModalHostWindow {
             return preferredWindow
         }
-        if let keyWindow, keyWindow.isVisible, keyWindow.isCmuxMainWindow {
+        if let keyWindow, keyWindow.isVisible, keyWindow.isCmuxModalHostWindow {
             return keyWindow
         }
+        // Deliberately narrower below: a hidden/non-key Quick Terminal must not
+        // capture dialogs raised elsewhere, so only regular main windows qualify.
         if let mainWindow, mainWindow.isVisible, mainWindow.isCmuxMainWindow {
             return mainWindow
         }
