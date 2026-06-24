@@ -921,7 +921,7 @@ extension CLINotifyProcessIntegrationRegressionTests {
         XCTAssertFalse(result.timedOut, result.stdout + result.stderr)
         XCTAssertNotEqual(result.status, 0, result.stdout + result.stderr)
         XCTAssertTrue(
-            result.stderr.contains("Local cmux web server is offline at http://localhost:3777."),
+            result.stderr.contains("Waiting for the local cmux web server at http://localhost:3777."),
             result.stderr
         )
         XCTAssertTrue(result.stderr.contains("Retrying in 1s (attempt 1/1)."), result.stderr)
@@ -929,6 +929,75 @@ extension CLINotifyProcessIntegrationRegressionTests {
         XCTAssertEqual(
             state.snapshot().compactMap { self.jsonObject($0)?["method"] as? String },
             ["vm.ssh_info", "vm.ssh_info"]
+        )
+    }
+
+    func testDefaultFreestyleSSHAttachHidesPersistentRetryLimitInCountdown() throws {
+        let cliPath = try bundledCLIPath()
+        let socketPath = makeSocketPath("vm-ssh-attach-local-down-persistent")
+        let listenerFD = try bindUnixSocket(at: socketPath)
+        let state = MockSocketServerState()
+        let vmID = "vm-persistent-freestyle"
+
+        defer {
+            Darwin.close(listenerFD)
+            unlink(socketPath)
+        }
+
+        let serverHandled = startMockServer(listenerFD: listenerFD, state: state) { line in
+            guard let payload = self.jsonObject(line),
+                  let id = payload["id"] as? String,
+                  let method = payload["method"] as? String else {
+                return self.malformedRequestResponse(raw: line)
+            }
+
+            switch method {
+            case "vm.ssh_info":
+                return self.v2Response(
+                    id: id,
+                    ok: false,
+                    error: [
+                        "code": "backend_unreachable",
+                        "message": """
+                        Cannot reach the cmux Cloud VM service at http://localhost:3777.
+
+                        Details:
+                          Could not connect to the server.
+                        """,
+                    ]
+                )
+            default:
+                return self.v2Response(
+                    id: id,
+                    ok: false,
+                    error: ["code": "unexpected", "message": "Unexpected method \(method)"]
+                )
+            }
+        }
+
+        var environment = ProcessInfo.processInfo.environment
+        environment["CMUX_SOCKET_PATH"] = socketPath
+        environment["CMUX_WORKSPACE_ID"] = "11111111-1111-1111-1111-111111111111"
+        environment["CMUX_SURFACE_ID"] = "22222222-2222-2222-2222-222222222222"
+        environment["CMUX_CLI_SENTRY_DISABLED"] = "1"
+        environment["CMUX_CLAUDE_HOOK_SENTRY_DISABLED"] = "1"
+        environment["CMUX_DEFAULT_FREESTYLE_ATTACH_RETRY_LIMIT"] = "86400"
+        environment["CMUX_DEFAULT_FREESTYLE_ATTACH_RETRY_DELAY_SECONDS"] = "0.1"
+
+        let result = runProcess(
+            executablePath: cliPath,
+            arguments: ["vm", "ssh-attach", "--id", vmID, "--default-freestyle-sshd"],
+            environment: environment,
+            timeout: 1
+        )
+
+        wait(for: [serverHandled], timeout: 5)
+        XCTAssertTrue(result.timedOut, result.stdout + result.stderr)
+        XCTAssertTrue(result.stderr.contains("Retrying in 0.1s (attempt 1)."), result.stderr)
+        XCTAssertFalse(result.stderr.contains("attempt 1/86400"), result.stderr)
+        XCTAssertGreaterThanOrEqual(
+            state.snapshot().compactMap { self.jsonObject($0)?["method"] as? String }.count,
+            1
         )
     }
 
