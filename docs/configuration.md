@@ -314,3 +314,21 @@ Three keyboard shortcuts drive the todo state, all editable in **Settings > Keyb
 - `toggleChecklistItemComplete` (default `cmd+return`) toggles the highlighted checklist item in the focused todo pane or checklist popover.
 
 cmux also posts a notification when a workspace's status first reaches done, and when its checklist first becomes fully complete, so you can watch agent progress without keeping the pane open.
+
+## Quick Terminal (Ghostty directives)
+
+The Quick Terminal is the dropdown terminal toggled by the system-wide hotkey
+(default `Ctrl+\``, configurable under Settings → Global Hotkey). Its geometry
+is read from the Ghostty configuration — these are standard Ghostty directives
+(documented upstream), honored by cmux, not `cmux.json` keys:
+
+- `quick-terminal-position` — `top` (default), `bottom`, `left`, `right`, `center`.
+- `quick-terminal-screen-fraction` — fraction of the screen the dropdown covers
+  (clamped to `0.2`–`0.95`).
+- `quick-terminal-animation-duration` — accepted for Ghostty-config compatibility;
+  cmux currently shows and hides the Quick Terminal without animation, so the
+  value has no visible effect.
+
+The window spans the full screen width, anchored under the menu bar (or on the
+physical top edge when overlaying a fullscreen app). Its height is remembered
+per display between toggles.

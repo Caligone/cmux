@@ -164280,13 +164280,115 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "クイックターミナル"
+            "value": "Quick Terminal"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "퀵 터미널"
+            "value": "Quick Terminal"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal"
+          }
+        },
+        "km": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal"
           }
         }
       }
@@ -164303,13 +164405,115 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "クイックターミナルのホットキーを有効にする"
+            "value": "Quick Terminalのホットキーを有効にする"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "퀵 터미널 단축키 활성화"
+            "value": "Quick Terminal 단축키 활성화"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تفعيل اختصار Quick Terminal"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Omogući prečicu za Quick Terminal"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktiver Quick Terminal-genvej"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal-Hotkey aktivieren"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activar atajo de Quick Terminal"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activer le raccourci Quick Terminal"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abilita tasto rapido Quick Terminal"
+          }
+        },
+        "km": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "បើក​ប្ដូរ​ក្ដារ​ Quick Terminal"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktiver Quick Terminal-snarvei"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Włącz skrót Quick Terminal"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ativar atalho do Quick Terminal"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Включить горячую клавишу Quick Terminal"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "เปิดใช้ฮอตคีย์ Quick Terminal"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal Kısayolunu Etkinleştir"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Увімкнути гарячу клавішу Quick Terminal"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "启用 Quick Terminal 热键"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "啟用 Quick Terminal 熱鍵"
           }
         }
       }
@@ -164326,13 +164530,115 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "どのアプリからでもクイックターミナルを呼び出せるようにします。"
+            "value": "どのアプリからでもQuick Terminalを呼び出せるようにします。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "이 옵션을 켜면 어떤 앱에서든 퀵 터미널을 불러올 수 있습니다."
+            "value": "이 옵션을 켜면 어떤 앱에서든 Quick Terminal을 불러올 수 있습니다."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فعِّل هذا الخيار لاستدعاء Quick Terminal من أي تطبيق."
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uključite ovo da biste pozvali Quick Terminal iz bilo koje aplikacije."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slå dette til for at åbne Quick Terminal fra enhver app."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktiviere dies, um Quick Terminal aus jeder App heraus aufzurufen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Actívalo para invocar Quick Terminal desde cualquier app."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activez cette option pour invoquer Quick Terminal depuis n'importe quelle app."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Attiva per richiamare il Quick Terminal da qualsiasi app."
+          }
+        },
+        "km": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "បើក​ជម្រើស​នេះ ដើម្បី​ហៅ Quick Terminal ពី​កម្មវិធី​ណាមួយ។"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slå på dette for å åpne Quick Terminal fra en hvilken som helst app."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Włącz, aby wywoływać Quick Terminal z dowolnej aplikacji."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ative para invocar o Quick Terminal em qualquer app."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Включите, чтобы вызывать Quick Terminal из любого приложения."
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "เปิดใช้เพื่อเรียก Quick Terminal จากแอปใดก็ได้"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Herhangi bir uygulamadan Quick Terminal'ı çağırmak için bunu açın."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Увімкніть, щоб викликати Quick Terminal із будь-якого застосунку."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开启后可从任意应用唤出 Quick Terminal。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "開啟後可從任何 App 呼叫 Quick Terminal。"
           }
         }
       }
@@ -164349,13 +164655,115 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "どのアプリからでもこのショートカットでクイックターミナルを表示または非表示にできます。"
+            "value": "どのアプリからでもこのショートカットでQuick Terminalを表示または非表示にできます。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "어떤 앱에서든 단축키를 눌러 퀵 터미널을 표시하거나 숨깁니다."
+            "value": "어떤 앱에서든 단축키를 눌러 Quick Terminal을 표시하거나 숨깁니다."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اضغط على الاختصار من أي تطبيق لإظهار Quick Terminal أو إخفائه."
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pritisnite prečicu iz bilo koje aplikacije da prikažete ili sakrijete Quick Terminal."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tryk på genvejen i enhver app for at vise eller skjule Quick Terminal."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drücke den Kurzbefehl in jeder App, um Quick Terminal ein- oder auszublenden."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pulsa el atajo desde cualquier app para mostrar u ocultar Quick Terminal."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appuie sur le raccourci depuis n'importe quelle app pour afficher ou masquer Quick Terminal."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premi il tasto rapido da qualsiasi app per mostrare o nascondere il Quick Terminal."
+          }
+        },
+        "km": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ចុច​ផ្លូវ​ក្ដារ​ចុច​ពី​កម្មវិធី​ណាមួយ ដើម្បី​បង្ហាញ ឬ​លាក់ Quick Terminal។"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trykk på snarveien fra en hvilken som helst app for å vise eller skjule Quick Terminal."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Naciśnij skrót w dowolnej aplikacji, aby pokazać lub ukryć Quick Terminal."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pressione o atalho em qualquer app para mostrar ou ocultar o Quick Terminal."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите сочетание клавиш в любом приложении, чтобы показать или скрыть Quick Terminal."
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "กดปุ่มลัดจากแอปใดก็ได้เพื่อแสดงหรือซ่อน Quick Terminal"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Herhangi bir uygulamadan kısayola basarak Quick Terminal'ı gösterin veya gizleyin."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Натисніть комбінацію клавіш у будь-якому застосунку, щоб показати або приховати Quick Terminal."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在任意应用中按下快捷键，即可显示或隐藏 Quick Terminal。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在任何 App 中按下快速鍵，即可顯示或隱藏 Quick Terminal。"
           }
         }
       }
@@ -164372,13 +164780,115 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "クイックターミナルはアクティブな画面端からスライドし、隠れている間もセッションを維持します。"
+            "value": "Quick Terminalはアクティブな画面端からスライドし、隠れている間もセッションを維持します。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "퀵 터미널은 활성 화면 가장자리에서 내려오며 숨겨진 동안에도 세션을 유지합니다."
+            "value": "Quick Terminal은 활성 화면 가장자리에서 내려오며 숨겨진 동안에도 세션을 유지합니다."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يظهر Quick Terminal منزلقاً من حافة الشاشة النشطة ويحافظ على جلسته حتى عند الإخفاء."
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal se klizi s ruba aktivnog ekrana i čuva sesiju dok je sakriven."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal glider frem fra kanten af den aktive skærm og holder sin session kørende, mens den er skjult."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal gleitet vom Rand des aktiven Bildschirms herein und behält seine Sitzung, solange es ausgeblendet ist."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal se desliza desde el borde de la pantalla activa y mantiene la sesión activa mientras está oculta."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal glisse depuis le bord de l'écran actif et conserve sa session même lorsqu'il est masqué."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Il Quick Terminal scorre dal bordo dello schermo attivo e mantiene la sessione anche quando è nascosto."
+          }
+        },
+        "km": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal រំកិល​ចេញ​ពី​ขอ​នៃ​អេក្រង់​សកម្ម ហើយ​រក្សា​ session ខណៈ​ពេល​លាក់​ខ្លួន។"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal glir inn fra kanten av den aktive skjermen og holder sesjonen kjørende mens den er skjult."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal wysuwa się z krawędzi aktywnego ekranu i utrzymuje sesję nawet po ukryciu."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Quick Terminal desliza a partir da borda da tela ativa e mantém a sessão ativa enquanto oculto."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal выезжает с края активного экрана и сохраняет сеанс, пока скрыт."
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal เลื่อนออกมาจากขอบหน้าจอที่ใช้งาน และรักษา session ไว้แม้จะซ่อนอยู่"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal, aktif ekranın kenarından kayarak açılır ve gizliyken de oturumunu sürdürür."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal висувається з краю активного екрана та зберігає сеанс навіть у прихованому стані."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal 从当前屏幕边缘滑出，隐藏期间会话保持运行。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal 從目前螢幕邊緣滑入，隱藏時仍保持工作階段運行。"
           }
         }
       }
@@ -164395,13 +164905,115 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "クイックターミナルを切り替え"
+            "value": "Quick Terminalを切り替え"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "퀵 터미널 전환"
+            "value": "Quick Terminal 전환"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تبديل Quick Terminal"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prebaci Quick Terminal"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slå Quick Terminal til/fra"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal umschalten"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alternar Quick Terminal"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher/Masquer Quick Terminal"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Attiva/Disattiva Quick Terminal"
+          }
+        },
+        "km": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "បិទ/បើក Quick Terminal"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slå Quick Terminal av/på"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Przełącz Quick Terminal"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alternar Quick Terminal"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Переключить Quick Terminal"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "สลับ Quick Terminal"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Terminal'ı Aç/Kapat"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перемкнути Quick Terminal"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "显示/隐藏 Quick Terminal"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "顯示/隱藏 Quick Terminal"
           }
         }
       }
@@ -181558,6 +182170,108 @@
           "stringUnit": {
             "state": "translated",
             "value": "글로벌 단축키"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختصار عالمي"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Globalna prečica"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Global genvej"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Globaler Hotkey"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atajo global"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Raccourci global"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tasto rapido globale"
+          }
+        },
+        "km": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ផ្លូវ​ក្ដារ​ចុច​សកល"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Global snarvei"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Globalny skrót"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atalho global"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Глобальная горячая клавиша"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ฮอตคีย์สากล"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genel Kısayol"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Глобальна гаряча клавіша"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全局热键"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全域熱鍵"
           }
         }
       }
