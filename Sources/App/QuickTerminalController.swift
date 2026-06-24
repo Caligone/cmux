@@ -3,29 +3,12 @@ import Foundation
 
 @MainActor
 final class QuickTerminalController {
-    private enum AnimationPhase {
-        case idle
-        case showing
-        case hiding
-    }
-
-    private enum PendingAnimationIntent {
-        case show
-        case hide
-    }
-
     @MainActor
     struct Dependencies {
         var createMainWindow: @MainActor (AppDelegate, QuickTerminalPlacement, SessionWindowSnapshot?) -> UUID
         var windowForMainWindowId: @MainActor (AppDelegate, UUID) -> CmuxMainWindow?
         var focusQuickTerminalWindow: @MainActor (AppDelegate, CmuxMainWindow) -> Bool
         var beep: @MainActor () -> Void
-        var animateFrame: @MainActor (
-            NSWindow,
-            NSRect,
-            TimeInterval,
-            @escaping @MainActor () -> Void
-        ) -> Void
 
         static let live = Dependencies(
             createMainWindow: { appDelegate, placement, snapshot in
@@ -47,17 +30,6 @@ final class QuickTerminalController {
             },
             beep: {
                 NSSound.beep()
-            },
-            animateFrame: { window, frame, duration, completion in
-                NSAnimationContext.runAnimationGroup { context in
-                    context.duration = duration
-                    context.allowsImplicitAnimation = true
-                    window.animator().setFrame(frame, display: true)
-                } completionHandler: {
-                    Task { @MainActor in
-                        completion()
-                    }
-                }
             }
         )
     }
@@ -73,8 +45,6 @@ final class QuickTerminalController {
     /// Tracks whether the in-progress hide restored a previous app, so
     /// completeHide() knows whether to NSApp.hide as a fallback. Reset per hide.
     private var restoredPreviousAppForCurrentHide = false
-    private var animationPhase = AnimationPhase.idle
-    private var pendingAnimationIntent: PendingAnimationIntent?
     private let configurationProvider: @MainActor () -> QuickTerminalConfiguration
     private let placementProvider: @MainActor (QuickTerminalConfiguration, Bool, @escaping (NSScreen) -> CGFloat?) -> QuickTerminalPlacement?
     private let dependencies: Dependencies
@@ -103,10 +73,6 @@ final class QuickTerminalController {
     }
 
     func toggle() {
-        if queueToggleIfAnimating() {
-            return
-        }
-
         let configuration = configurationProvider()
         guard let appDelegate,
               let placement = resolvePlacement(configuration) else {
@@ -137,8 +103,6 @@ final class QuickTerminalController {
     func handleWindowUnregistered(windowId: UUID, pendingSnapshot: SessionWindowSnapshot?) {
         guard quickTerminalWindowId == windowId else { return }
         quickTerminalWindowId = nil
-        pendingAnimationIntent = nil
-        animationPhase = .idle
 
         if var pendingSnapshot {
             pendingSnapshot.isQuickTerminal = true
@@ -147,10 +111,6 @@ final class QuickTerminalController {
     }
 
     func hideFromCloseShortcut(_ window: CmuxMainWindow) {
-        if queueHideIfAnimating() {
-            return
-        }
-
         let configuration = configurationProvider()
         guard let placement = resolvePlacement(configuration) else {
             let restored = restorePreviousApp()
@@ -185,55 +145,6 @@ final class QuickTerminalController {
     private func isOverlayingThirdPartyApp() -> Bool {
         guard let frontmost = NSWorkspace.shared.frontmostApplication else { return false }
         return frontmost != .current
-    }
-
-    private func queueToggleIfAnimating() -> Bool {
-        switch animationPhase {
-        case .idle:
-            return false
-        case .showing:
-            pendingAnimationIntent = .hide
-            return true
-        case .hiding:
-            pendingAnimationIntent = .show
-            return true
-        }
-    }
-
-    private func queueHideIfAnimating() -> Bool {
-        switch animationPhase {
-        case .idle:
-            return false
-        case .showing:
-            pendingAnimationIntent = .hide
-            return true
-        case .hiding:
-            pendingAnimationIntent = nil
-            return true
-        }
-    }
-
-    private func runPendingAnimationIntent() {
-        guard let pendingAnimationIntent else { return }
-        self.pendingAnimationIntent = nil
-
-        let configuration = configurationProvider()
-        guard let appDelegate,
-              let placement = resolvePlacement(configuration) else {
-            return
-        }
-
-        guard let window = quickTerminalWindow(appDelegate: appDelegate, placement: placement) else {
-            dependencies.beep()
-            return
-        }
-
-        switch pendingAnimationIntent {
-        case .show:
-            show(window, placement: placement, configuration: configuration, appDelegate: appDelegate)
-        case .hide:
-            hide(window, placement: placement, configuration: configuration)
-        }
     }
 
     private func isShown(_ window: NSWindow) -> Bool {
@@ -310,7 +221,6 @@ final class QuickTerminalController {
         // screen), which on a vertically-stacked multi-monitor setup lands inside
         // the *other* screen and flashes there. Show the window directly at its
         // final visible frame on the target screen instead — no cross-screen flash.
-        animationPhase = .idle
         window.orderOut(nil)
         NSAnimationContext.beginGrouping()
         NSAnimationContext.current.duration = 0
@@ -322,7 +232,6 @@ final class QuickTerminalController {
 #if DEBUG
         cmuxDebugLog("quickTerminal.show visible={\(NSStringFromRect(placement.visibleFrame))}")
 #endif
-        runPendingAnimationIntent()
     }
 
     private func hide(
@@ -362,14 +271,12 @@ final class QuickTerminalController {
         cmuxDebugLog("quickTerminal.hide direct")
 #endif
         completeHide(window, placement: placement)
-        runPendingAnimationIntent()
     }
 
     private func completeHide(_ window: CmuxMainWindow, placement: QuickTerminalPlacement) {
         window.orderOut(nil)
         window.setFrame(placement.visibleFrame, display: false)
         window.setSoftHiddenForVisibilityController(true)
-        animationPhase = .idle
         // If no previous app was restored, hiding just the window leaves cmux
         // frontmost-but-invisible (it keeps focus while hidden). Hide the whole
         // app so macOS hands focus to whatever is behind it.
