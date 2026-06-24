@@ -605,6 +605,30 @@ jobs:
             fi
           fi
 
+      # TEMP DIAGNOSTIC (reland branch only, do not merge to main): the app-host
+      # crashes intermittently even on green runs, so capture every crash report
+      # to symbolicate the SIGSEGV that #6532 made frequent enough to fail shard 4.
+      - name: Capture app-host crash reports
+        if: ${{ always() }}
+        run: |
+          set +e
+          DEST="$RUNNER_TEMP/apphost-crash-reports"
+          mkdir -p "$DEST"
+          for dir in "$HOME/Library/Logs/DiagnosticReports" "/Library/Logs/DiagnosticReports"; do
+            [ -d "$dir" ] && cp -R "$dir"/* "$DEST/" 2>/dev/null
+          done
+          echo "Collected crash reports:"
+          ls -la "$DEST" || true
+
+      - name: Upload app-host crash reports
+        if: ${{ always() }}
+        continue-on-error: true
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: apphost-crash-reports-shard-${{ matrix.shard }}
+          path: ${{ runner.temp }}/apphost-crash-reports
+          if-no-files-found: ignore
+
       - name: Run bundled Ghostty theme picker helper regression
         if: ${{ matrix.shard == fromJSON(env.CMUX_APP_HOST_FOCUSED_REGRESSION_SHARD) }}
         run: |
