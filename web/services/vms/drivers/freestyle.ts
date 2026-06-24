@@ -360,6 +360,9 @@ export class FreestyleProvider implements VMProvider {
       }
       return endpoint;
     } catch (err) {
+      if (options?.requireDaemon) {
+        throw err;
+      }
       if (!shouldFallbackAttachToSSH(err)) {
         throw err;
       }
