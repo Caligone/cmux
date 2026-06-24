@@ -178641,15 +178641,15 @@
     "textbox.submitAction.claude": {
       "extractionState": "manual",
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Claude" } },
-        "ja": { "stringUnit": { "state": "translated", "value": "Claude" } }
+        "en": { "stringUnit": { "state": "translated", "value": "Claude Dangerous" } },
+        "ja": { "stringUnit": { "state": "translated", "value": "Claude Dangerous" } }
       }
     },
     "textbox.submitAction.codex": {
       "extractionState": "manual",
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Codex" } },
-        "ja": { "stringUnit": { "state": "translated", "value": "Codex" } }
+        "en": { "stringUnit": { "state": "translated", "value": "Codex Yolo" } },
+        "ja": { "stringUnit": { "state": "translated", "value": "Codex Yolo" } }
       }
     },
     "textbox.submitAction.cancelPending": {
@@ -185924,15 +185924,15 @@
     "settings.textBox.submitAction.claude": {
       "extractionState": "manual",
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Claude" } },
-        "ja": { "stringUnit": { "state": "translated", "value": "Claude" } }
+        "en": { "stringUnit": { "state": "translated", "value": "Claude Dangerous" } },
+        "ja": { "stringUnit": { "state": "translated", "value": "Claude Dangerous" } }
       }
     },
     "settings.textBox.submitAction.codex": {
       "extractionState": "manual",
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Codex" } },
-        "ja": { "stringUnit": { "state": "translated", "value": "Codex" } }
+        "en": { "stringUnit": { "state": "translated", "value": "Codex Yolo" } },
+        "ja": { "stringUnit": { "state": "translated", "value": "Codex Yolo" } }
       }
     },
     "settings.textBox.submitAction.opencode": {
