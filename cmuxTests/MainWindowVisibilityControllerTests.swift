@@ -476,30 +476,97 @@ final class MainWindowVisibilityControllerTests: XCTestCase {
         XCTAssertEqual(activationCount, 0)
     }
 
-    func testQuickTerminalPlacementUsesTopScreenBand() {
+    func testQuickTerminalPlacementIsFullWidthAnchoredOnTop() {
+        // Default .top: full-width, anchored on visibleFrame.maxY (no overlay),
+        // height = screenFraction (0.46) of the available band. hiddenFrame sits
+        // just above the top edge for the (now removed) slide geometry.
         let placement = QuickTerminalPlacement.placement(
             forVisibleFrame: NSRect(x: 0, y: 0, width: 1000, height: 800)
         )
 
-        XCTAssertEqual(placement.visibleFrame.origin.x, 60, accuracy: 0.001)
-        XCTAssertEqual(placement.visibleFrame.origin.y, 368, accuracy: 0.001)
-        XCTAssertEqual(placement.visibleFrame.width, 880, accuracy: 0.001)
-        XCTAssertEqual(placement.visibleFrame.height, 420, accuracy: 0.001)
+        XCTAssertEqual(placement.visibleFrame.origin.x, 0, accuracy: 0.001)
+        XCTAssertEqual(placement.visibleFrame.origin.y, 432, accuracy: 0.001)
+        XCTAssertEqual(placement.visibleFrame.width, 1000, accuracy: 0.001)
+        XCTAssertEqual(placement.visibleFrame.height, 368, accuracy: 0.001)
         XCTAssertEqual(placement.hiddenFrame.origin.x, placement.visibleFrame.origin.x, accuracy: 0.001)
-        XCTAssertEqual(placement.hiddenFrame.origin.y, 812, accuracy: 0.001)
+        XCTAssertEqual(placement.hiddenFrame.origin.y, 800, accuracy: 0.001)
     }
 
-    func testQuickTerminalPlacementClampsToSmallScreen() {
+    func testQuickTerminalPlacementClampsHeightToSmallScreen() {
+        // On a 300pt-tall band, 0.46 fraction = 138pt (above the 120pt floor),
+        // still full-width and anchored on the visible top edge.
         let placement = QuickTerminalPlacement.placement(
             forVisibleFrame: NSRect(x: 10, y: 20, width: 500, height: 300)
         )
 
-        XCTAssertEqual(placement.visibleFrame.origin.x, 42, accuracy: 0.001)
-        XCTAssertEqual(placement.visibleFrame.origin.y, 20, accuracy: 0.001)
-        XCTAssertEqual(placement.visibleFrame.width, 436, accuracy: 0.001)
-        XCTAssertEqual(placement.visibleFrame.height, 292, accuracy: 0.001)
+        XCTAssertEqual(placement.visibleFrame.origin.x, 10, accuracy: 0.001)
+        XCTAssertEqual(placement.visibleFrame.origin.y, 182, accuracy: 0.001)
+        XCTAssertEqual(placement.visibleFrame.width, 500, accuracy: 0.001)
+        XCTAssertEqual(placement.visibleFrame.height, 138, accuracy: 0.001)
         XCTAssertEqual(placement.hiddenFrame.origin.x, placement.visibleFrame.origin.x, accuracy: 0.001)
-        XCTAssertEqual(placement.hiddenFrame.origin.y, 328, accuracy: 0.001)
+        XCTAssertEqual(placement.hiddenFrame.origin.y, 320, accuracy: 0.001)
+    }
+
+    func testQuickTerminalPlacementAnchorsToPhysicalTopWhenOverlayingFullscreen() {
+        // Overlaying a fullscreen app: NSScreen still reports the desktop Space's
+        // visibleFrame (here 30pt shorter than the physical frame). The window
+        // must anchor on the *physical* top (fullFrame.maxY) to avoid a menu-bar
+        // gap, since the menu bar is hidden underneath a fullscreen app.
+        let placement = QuickTerminalPlacement.placement(
+            forVisibleFrame: NSRect(x: 0, y: 0, width: 1000, height: 770),
+            fullFrame: NSRect(x: 0, y: 0, width: 1000, height: 800),
+            overlayingFullscreen: true
+        )
+
+        // topY = fullFrame.maxY = 800, height = 0.46 * 800 = 368.
+        XCTAssertEqual(placement.visibleFrame.maxY, 800, accuracy: 0.001)
+        XCTAssertEqual(placement.visibleFrame.origin.y, 432, accuracy: 0.001)
+        XCTAssertEqual(placement.visibleFrame.width, 1000, accuracy: 0.001)
+    }
+
+    func testQuickTerminalPlacementSubtractsNotchWhenOverlayingFullscreen() {
+        // On a notched display the physical top hosts the notch; anchoring there
+        // would slide content under it. topY = fullFrame.maxY - safeAreaInset.
+        let placement = QuickTerminalPlacement.placement(
+            forVisibleFrame: NSRect(x: 0, y: 0, width: 1000, height: 770),
+            fullFrame: NSRect(x: 0, y: 0, width: 1000, height: 800),
+            overlayingFullscreen: true,
+            topSafeAreaInset: 32
+        )
+
+        // topY = 800 - 32 = 768 (clears the notch, still covers the menu-bar band).
+        XCTAssertEqual(placement.visibleFrame.maxY, 768, accuracy: 0.001)
+    }
+
+    func testQuickTerminalPlacementIgnoresNotchWhenNotOverlaying() {
+        // Without an overlay the menu bar is visible, so the notch inset is moot:
+        // anchoring stays on visibleFrame.maxY regardless of topSafeAreaInset.
+        let placement = QuickTerminalPlacement.placement(
+            forVisibleFrame: NSRect(x: 0, y: 0, width: 1000, height: 770),
+            fullFrame: NSRect(x: 0, y: 0, width: 1000, height: 800),
+            overlayingFullscreen: false,
+            topSafeAreaInset: 32
+        )
+
+        XCTAssertEqual(placement.visibleFrame.maxY, 770, accuracy: 0.001)
+    }
+
+    func testModalHostRecognizesQuickTerminalAndMainWindows() {
+        let quake = NSWindow()
+        quake.identifier = NSUserInterfaceItemIdentifier("cmux.quickTerminal")
+        XCTAssertTrue(isCmuxQuickTerminalWindow(quake))
+        XCTAssertTrue(isCmuxModalHostWindow(quake))
+        XCTAssertFalse(isCmuxMainWindow(quake))
+
+        let main = NSWindow()
+        main.identifier = NSUserInterfaceItemIdentifier("cmux.main.42")
+        XCTAssertTrue(isCmuxMainWindow(main))
+        XCTAssertTrue(isCmuxModalHostWindow(main))
+        XCTAssertFalse(isCmuxQuickTerminalWindow(main))
+
+        let other = NSWindow()
+        other.identifier = NSUserInterfaceItemIdentifier("something.else")
+        XCTAssertFalse(isCmuxModalHostWindow(other))
     }
 
     func testQuickTerminalKeepsPendingSnapshotWhenCreatedWindowCannotBeRetrieved() {
@@ -590,207 +657,6 @@ final class MainWindowVisibilityControllerTests: XCTestCase {
         XCTAssertNil(controller.pendingSessionSnapshotForPersistence())
     }
 
-    func testQuickTerminalCenteredHideDoesNotRunNoOpFrameAnimation() {
-        let appDelegate = AppDelegate()
-        let configuration = QuickTerminalConfiguration(
-            position: .center,
-            screenFraction: 0.5,
-            animationDuration: 0.18
-        )
-        let placement = QuickTerminalPlacement.placement(
-            forVisibleFrame: NSRect(x: 0, y: 0, width: 1000, height: 800),
-            configuration: configuration
-        )
-        let window = makeCmuxWindow(frame: placement.visibleFrame)
-        defer { window.orderOut(nil) }
-        var animationCount = 0
-        let controller = QuickTerminalController(
-            appDelegate: appDelegate,
-            configurationProvider: { configuration },
-            placementProvider: { _, _, _ in placement },
-            dependencies: makeQuickTerminalDependencies(
-                animateFrame: { _, _, _, completion in
-                    animationCount += 1
-                    completion()
-                }
-            )
-        )
-
-        controller.hideFromCloseShortcut(window)
-
-        XCTAssertEqual(animationCount, 0)
-        XCTAssertEqual(window.alphaValue, 0, accuracy: 0.001)
-        XCTAssertTrue(window.ignoresMouseEvents)
-    }
-
-    func testQuickTerminalToggleDuringShowQueuesHideAfterShowAnimation() {
-        let appDelegate = AppDelegate()
-        let configuration = QuickTerminalConfiguration(
-            position: .top,
-            screenFraction: 0.5,
-            animationDuration: 0.18
-        )
-        let placement = QuickTerminalPlacement.placement(
-            forVisibleFrame: NSRect(x: 0, y: 0, width: 1000, height: 800),
-            configuration: configuration
-        )
-        let window = makeCmuxWindow(frame: placement.visibleFrame)
-        defer { window.orderOut(nil) }
-        let windowId = UUID()
-        var animationFrames: [NSRect] = []
-        var animationCompletions: [@MainActor () -> Void] = []
-        let controller = QuickTerminalController(
-            appDelegate: appDelegate,
-            configurationProvider: { configuration },
-            placementProvider: { _, _, _ in placement },
-            dependencies: makeQuickTerminalDependencies(
-                createMainWindow: { _, _, _ in windowId },
-                windowForMainWindowId: { _, id in id == windowId ? window : nil },
-                focusQuickTerminalWindow: { _, window in
-                    window.orderFront(nil)
-                    return true
-                },
-                animateFrame: { _, frame, _, completion in
-                    animationFrames.append(frame)
-                    animationCompletions.append(completion)
-                }
-            )
-        )
-
-        controller.toggle()
-        controller.toggle()
-
-        XCTAssertEqual(animationFrames.count, 1)
-        XCTAssertEqual(animationFrames.map { $0.origin.y }, [placement.visibleFrame.origin.y])
-
-        animationCompletions.removeFirst()()
-
-        XCTAssertEqual(animationFrames.count, 2)
-        XCTAssertEqual(animationFrames.map { $0.origin.y }, [
-            placement.visibleFrame.origin.y,
-            placement.hiddenFrame.origin.y
-        ])
-
-        animationCompletions.removeFirst()()
-
-        XCTAssertEqual(window.alphaValue, 0, accuracy: 0.001)
-        XCTAssertTrue(window.ignoresMouseEvents)
-    }
-
-    func testQuickTerminalCloseShortcutDuringShowQueuesHideAfterShowAnimation() {
-        let appDelegate = AppDelegate()
-        let configuration = QuickTerminalConfiguration(
-            position: .top,
-            screenFraction: 0.5,
-            animationDuration: 0.18
-        )
-        let placement = QuickTerminalPlacement.placement(
-            forVisibleFrame: NSRect(x: 0, y: 0, width: 1000, height: 800),
-            configuration: configuration
-        )
-        let window = makeCmuxWindow(frame: placement.visibleFrame)
-        defer { window.orderOut(nil) }
-        let windowId = UUID()
-        var animationFrames: [NSRect] = []
-        var animationCompletions: [@MainActor () -> Void] = []
-        let controller = QuickTerminalController(
-            appDelegate: appDelegate,
-            configurationProvider: { configuration },
-            placementProvider: { _, _, _ in placement },
-            dependencies: makeQuickTerminalDependencies(
-                createMainWindow: { _, _, _ in windowId },
-                windowForMainWindowId: { _, id in id == windowId ? window : nil },
-                focusQuickTerminalWindow: { _, window in
-                    window.orderFront(nil)
-                    return true
-                },
-                animateFrame: { _, frame, _, completion in
-                    animationFrames.append(frame)
-                    animationCompletions.append(completion)
-                }
-            )
-        )
-
-        controller.toggle()
-        controller.hideFromCloseShortcut(window)
-
-        XCTAssertEqual(animationFrames.count, 1)
-        XCTAssertEqual(animationFrames.map { $0.origin.y }, [placement.visibleFrame.origin.y])
-
-        animationCompletions.removeFirst()()
-
-        XCTAssertEqual(animationFrames.count, 2)
-        XCTAssertEqual(animationFrames.map { $0.origin.y }, [
-            placement.visibleFrame.origin.y,
-            placement.hiddenFrame.origin.y
-        ])
-
-        animationCompletions.removeFirst()()
-
-        XCTAssertEqual(window.alphaValue, 0, accuracy: 0.001)
-        XCTAssertTrue(window.ignoresMouseEvents)
-    }
-
-    func testQuickTerminalToggleDuringHideQueuesShowAfterHideAnimation() {
-        let appDelegate = AppDelegate()
-        let configuration = QuickTerminalConfiguration(
-            position: .top,
-            screenFraction: 0.5,
-            animationDuration: 0.18
-        )
-        let placement = QuickTerminalPlacement.placement(
-            forVisibleFrame: NSRect(x: 0, y: 0, width: 1000, height: 800),
-            configuration: configuration
-        )
-        let window = makeCmuxWindow(frame: placement.visibleFrame)
-        defer { window.orderOut(nil) }
-        let windowId = UUID()
-        var animationFrames: [NSRect] = []
-        var animationCompletions: [@MainActor () -> Void] = []
-        let controller = QuickTerminalController(
-            appDelegate: appDelegate,
-            configurationProvider: { configuration },
-            placementProvider: { _, _, _ in placement },
-            dependencies: makeQuickTerminalDependencies(
-                createMainWindow: { _, _, _ in windowId },
-                windowForMainWindowId: { _, id in id == windowId ? window : nil },
-                focusQuickTerminalWindow: { _, window in
-                    window.orderFront(nil)
-                    return true
-                },
-                animateFrame: { _, frame, _, completion in
-                    animationFrames.append(frame)
-                    animationCompletions.append(completion)
-                }
-            )
-        )
-
-        controller.toggle()
-        animationCompletions.removeFirst()()
-        controller.toggle()
-        controller.toggle()
-
-        XCTAssertEqual(animationFrames.count, 2)
-        XCTAssertEqual(animationFrames.map { $0.origin.y }, [
-            placement.visibleFrame.origin.y,
-            placement.hiddenFrame.origin.y
-        ])
-
-        animationCompletions.removeFirst()()
-
-        XCTAssertEqual(animationFrames.count, 3)
-        XCTAssertEqual(animationFrames.map { $0.origin.y }, [
-            placement.visibleFrame.origin.y,
-            placement.hiddenFrame.origin.y,
-            placement.visibleFrame.origin.y
-        ])
-
-        animationCompletions.removeFirst()()
-
-        XCTAssertEqual(window.alphaValue, 1, accuracy: 0.001)
-        XCTAssertFalse(window.ignoresMouseEvents)
-    }
-
     private func makeWindow() -> NSWindow {
         let window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 120, height: 80),
@@ -827,20 +693,13 @@ final class MainWindowVisibilityControllerTests: XCTestCase {
         createMainWindow: @escaping @MainActor (AppDelegate, QuickTerminalPlacement, SessionWindowSnapshot?) -> UUID = { _, _, _ in UUID() },
         windowForMainWindowId: @escaping @MainActor (AppDelegate, UUID) -> CmuxMainWindow? = { _, _ in nil },
         focusQuickTerminalWindow: @escaping @MainActor (AppDelegate, CmuxMainWindow) -> Bool = { _, _ in true },
-        beep: @escaping @MainActor () -> Void = {},
-        animateFrame: @escaping @MainActor (
-            NSWindow,
-            NSRect,
-            TimeInterval,
-            @escaping @MainActor () -> Void
-        ) -> Void = { _, _, _, completion in completion() }
+        beep: @escaping @MainActor () -> Void = {}
     ) -> QuickTerminalController.Dependencies {
         QuickTerminalController.Dependencies(
             createMainWindow: createMainWindow,
             windowForMainWindowId: windowForMainWindowId,
             focusQuickTerminalWindow: focusQuickTerminalWindow,
-            beep: beep,
-            animateFrame: animateFrame
+            beep: beep
         )
     }
 

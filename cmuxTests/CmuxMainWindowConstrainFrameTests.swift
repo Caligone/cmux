@@ -162,5 +162,40 @@ final class CmuxMainWindowConstrainFrameTests: XCTestCase {
             CmuxMainWindow.shouldPreserveFrameDuringConstrain(flushTop, visibleFrames: [visible])
         )
     }
+
+    func testQuickTerminalPanelIsNeverConstrained() throws {
+        guard let screen = NSScreen.main else {
+            throw XCTSkip("No screen available for quick terminal constrain test")
+        }
+        let window = CmuxMainWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 800, height: 600),
+            styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
+            backing: .buffered,
+            defer: false
+        )
+        window.isReleasedWhenClosed = false
+        window.isQuickTerminalPanel = true
+        defer {
+            window.orderOut(nil)
+            window.close()
+        }
+
+        // A frame poking above the visible area (covering the menu-bar band) —
+        // exactly what the quake does when overlaying a fullscreen app. It must
+        // be returned verbatim, never clamped down under the menu bar.
+        let proposed = NSRect(
+            x: screen.frame.minX,
+            y: screen.frame.maxY - 400,
+            width: screen.frame.width,
+            height: 400
+        )
+
+        let constrained = window.constrainFrameRect(proposed, to: screen)
+
+        XCTAssertEqual(constrained.origin.x, proposed.origin.x, accuracy: 0.5)
+        XCTAssertEqual(constrained.origin.y, proposed.origin.y, accuracy: 0.5)
+        XCTAssertEqual(constrained.size.width, proposed.size.width, accuracy: 0.5)
+        XCTAssertEqual(constrained.size.height, proposed.size.height, accuracy: 0.5)
+    }
 }
 #endif
