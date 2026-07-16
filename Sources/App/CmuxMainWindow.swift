@@ -172,8 +172,6 @@ final class CmuxMainWindow: NSPanel {
         return capped
     }
 
-||||||| parent of fc43668486 (Quick Terminal: overlay fullscreen + full-width top + persistance hauteur)
-final class CmuxMainWindow: NSWindow {
     static var minimumContentSize: NSSize {
         NSSize(
             width: CGFloat(SessionPersistencePolicy.minimumWindowWidth),
