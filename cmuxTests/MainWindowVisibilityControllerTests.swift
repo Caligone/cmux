@@ -554,19 +554,19 @@ final class MainWindowVisibilityControllerTests: XCTestCase {
     func testModalHostRecognizesQuickTerminalAndMainWindows() {
         let quake = NSWindow()
         quake.identifier = NSUserInterfaceItemIdentifier("cmux.quickTerminal")
-        XCTAssertTrue(isCmuxQuickTerminalWindow(quake))
-        XCTAssertTrue(isCmuxModalHostWindow(quake))
-        XCTAssertFalse(isCmuxMainWindow(quake))
+        XCTAssertTrue(quake.isCmuxQuickTerminalWindow)
+        XCTAssertTrue(quake.isCmuxModalHostWindow)
+        XCTAssertFalse(quake.isCmuxMainWindow)
 
         let main = NSWindow()
         main.identifier = NSUserInterfaceItemIdentifier("cmux.main.42")
-        XCTAssertTrue(isCmuxMainWindow(main))
-        XCTAssertTrue(isCmuxModalHostWindow(main))
-        XCTAssertFalse(isCmuxQuickTerminalWindow(main))
+        XCTAssertTrue(main.isCmuxMainWindow)
+        XCTAssertTrue(main.isCmuxModalHostWindow)
+        XCTAssertFalse(main.isCmuxQuickTerminalWindow)
 
         let other = NSWindow()
         other.identifier = NSUserInterfaceItemIdentifier("something.else")
-        XCTAssertFalse(isCmuxModalHostWindow(other))
+        XCTAssertFalse(other.isCmuxModalHostWindow)
     }
 
     func testQuickTerminalKeepsPendingSnapshotWhenCreatedWindowCannotBeRetrieved() {
